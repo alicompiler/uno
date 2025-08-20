@@ -114,6 +114,12 @@ export const addGamesApi = (restApi: ExpressInstance) => {
     restApi.post('/api/games/:gameId/players', joinGameApi);
     // TODO: remove
     restApi.get('/api/games', (_, res) => {
-        res.status(200).json(gamesRepository.getAll());
+        res.status(200).json(
+            gamesRepository.getAll().map((g) => {
+                g.discardPile = [];
+                g.withdrewPile = [];
+                return g;
+            })
+        );
     });
 };
