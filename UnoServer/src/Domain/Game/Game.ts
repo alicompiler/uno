@@ -18,6 +18,15 @@ export interface Game {
     activePlayerIndex: number;
 }
 
+export interface GameStatus {
+    id: string;
+
+    players: { id: string; name: string; isAdmin: boolean }[];
+    topCard?: Card;
+    withdrewPileCount: number;
+    direction: GameDirection;
+}
+
 export function canPlayCard(game: Game, card: Card): boolean {
     if (card.isWild) {
         return true;
@@ -69,5 +78,16 @@ export function withdrewCard(game: Game): { game: Game; events: Event[] } {
     return {
         game: newGame,
         events,
+    };
+}
+
+export function buildGameStatus(game: Game): GameStatus {
+    const topCard = game.discardPile.length > 0 ? game.discardPile[game.discardPile.length - 1] : undefined;
+    return {
+        id: game.id,
+        players: [...game.players],
+        topCard,
+        withdrewPileCount: game.withdrewPile.length,
+        direction: game.direction,
     };
 }

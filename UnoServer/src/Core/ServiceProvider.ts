@@ -5,6 +5,10 @@ export interface ServiceProvider {
     getGameRepository(): GameRepository;
 }
 
+let serviceProvider: ServiceProvider | null = null;
 export const getServiceProvider = (): ServiceProvider => {
-    return new InMemoryServiceProvider();
+    if (serviceProvider == null) {
+        serviceProvider = new InMemoryServiceProvider();
+    }
+    return serviceProvider;
 };
