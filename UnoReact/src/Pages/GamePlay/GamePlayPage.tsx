@@ -1,33 +1,55 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import { UnoCardComponent } from '../../Components/UnoCard/UnoCard';
 import CWIcon from './../../assets/cw.png';
 import CCWIcon from './../../assets/cw.png';
-import { CardBack } from '../../Components/UnoCard/CardBack';
+import type { GameStatus } from '../../Domain/Game/GamesService';
+import { getProfileOrCreateIfNotExists } from '../../Domain/Profile/Profile';
+
+export type ConnectionStatus = 'disconnected' | 'connecting' | 'connected';
 
 export const GamePlayPage: React.FC = () => {
+    const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('disconnected');
     const { gameId } = useParams() as { gameId: string };
-    console.log(gameId);
-    const players = [
-        { name: 'Hay', id: 'Hay' },
-        { name: 'Mah', id: 'Mah' },
-        { name: 'Hak', id: 'Hak' },
-        { name: 'Muj', id: 'Muj' },
-        { name: 'Dur', id: 'Dur' },
-        { name: 'Mua', id: 'Mua' },
-        { name: 'Ali', id: 'ali' },
-        { name: 'Muh', id: 'Muh' },
-    ];
+    const [gameStatus, setGameStatus] = useState<GameStatus | null>(null);
+    const ws = useRef<WebSocket | null>(null);
+
+    useEffect(() => {
+        const profile = getProfileOrCreateIfNotExists();
+        ws.current = new WebSocket(`ws://localhost:3001?gameId=${gameId}&playerId=${profile.name}`);
+        setConnectionStatus('connecting');
+        ws.current.onopen = () => {
+            setConnectionStatus('connected');
+        };
+
+        ws.current.onmessage = (message) => {
+            const data = JSON.parse(message.data.toString());
+            if (data.event === 'game-status') {
+                setGameStatus(data.payload);
+            }
+        };
+
+        ws.current.onclose = () => {
+            setConnectionStatus('disconnected');
+        };
+
+        return () => {
+            ws.current?.close();
+            setConnectionStatus('disconnected');
+            console.log('close the connection');
+        };
+    }, [gameId]);
 
     return (
-        <div className="flex items-center justify-center h-full gap-8">
-            <Table players={players} meId="ali" activePlayer={6} direction="rtl" />
+        <div className="flex items-center justify-center h-full flex-col gap-8">
+            <p>Connection Status: {connectionStatus}</p>
+            <Table players={gameStatus?.players ?? []} meId="ali" activePlayer={6} direction="rtl" />
         </div>
     );
 };
 
 interface TableProps {
-    players: { id: string; name: string }[];
+    players: GameStatus['players'];
     activePlayer: number;
     meId: string;
     direction: 'ltr' | 'rtl';
@@ -100,7 +122,9 @@ const Table: React.FC<TableProps> = ({ players, meId, direction }) => {
                 ))}
             </div>
             <div className="absolute right-0 left-0 -bottom-10 w-full flex items-center justify-center">
-                <Player id={arrangedPlayers[0].id} name={arrangedPlayers[0].name} isActive={false} />
+                {arrangedPlayers[0] && (
+                    <Player id={arrangedPlayers[0].id} name={arrangedPlayers[0].name} isActive={false} />
+                )}
             </div>
         </div>
     );
@@ -109,7 +133,7 @@ const Table: React.FC<TableProps> = ({ players, meId, direction }) => {
 const Player: React.FC<{ name: string; id: string; isActive: boolean }> = ({ name }) => {
     return (
         <div className="bg-black text-white p-2 rounded shadow-2xl">
-            <p className="text-xl w-12 overflow-ellipsis text-center">{name}</p>
+            <p className="text-sm w-12 max-w-12 overflow-ellipsis text-center text-nowrap overflow-hidden">{name}</p>
         </div>
     );
 };
@@ -118,6 +142,8 @@ type Layout = { right: number; top: number; left: number };
 
 const getTableLayout = (length: number): Layout => {
     const map: Record<number, Layout> = {
+        0: { right: 0, top: 0, left: 0 },
+        1: { right: 0, top: 0, left: 0 },
         2: { right: 0, top: 1, left: 0 },
         3: { right: 1, top: 0, left: 1 },
         4: { right: 1, top: 1, left: 1 },
