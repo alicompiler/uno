@@ -59,8 +59,8 @@ const Table: React.FC<TableProps> = ({ players, meId, direction }) => {
 
     return (
         <div className="relative">
-            <div className="bg-indigo-500 w-50 h-96 md:w-72 md:h-100 lg:w-80 lg:h-140 rounded-full shadow-lg flex flex-col gap-2 justify-center items-center text-white font-bold border-8 border-orange-400">
-                <div>
+            <div className="bg-indigo-500 w-50 h-96 md:w-72 md:h-100 lg:w-80 lg:h-140 rounded-full shadow-lg flex flex-col gap-2 justify-between items-center text-white font-bold border-8 border-orange-400">
+                <div className="p-8">
                     <img src={direction === 'rtl' ? CWIcon : CCWIcon} className="w-8 h-8 invert-100" />
                 </div>
                 <div>
@@ -74,11 +74,10 @@ const Table: React.FC<TableProps> = ({ players, meId, direction }) => {
                         }}
                     />
                 </div>
-                <div>
-                    <div className="rotate-270 cursor-pointer">
-                        <CardBack width={70} height={120} />
-                    </div>
-                    <p>Cards Deck</p>
+                <div className="p-8">
+                    <button className="border-2 border-white bg-orange-500 text-white rounded px-4 py-2 cursor-pointer hover:opacity-70">
+                        Drew Card
+                    </button>
                 </div>
             </div>
             <div className="absolute -left-10 top-1/5 h-2/3 flex flex-col items-center justify-around">
