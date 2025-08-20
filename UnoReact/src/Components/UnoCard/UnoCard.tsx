@@ -16,7 +16,7 @@ export const UnoCardComponent: React.FC<{ card: UnoCard; width: number; height: 
             }}
         >
             <div className="flex items-start justify-start w-full">
-                {card.value !== undefined ? <CardTopBottom value={card.value} /> : null}
+                {card.value !== undefined ? <CardTopBottom value={card.value} /> : <p className="text-lg">W</p>}
             </div>
             <div className="flex-1">
                 <div className="rotate-12 w-[80px] h-[120px] rounded-full bg-white flex items-center justify-center text-black">
@@ -26,7 +26,7 @@ export const UnoCardComponent: React.FC<{ card: UnoCard; width: number; height: 
                 </div>
             </div>
             <div className="flex items-start justify-end w-full">
-                {card.value !== undefined ? <CardTopBottom value={card.value} /> : null}
+                {card.value !== undefined ? <CardTopBottom value={card.value} /> : <p className="text-lg">W</p>}
             </div>
         </div>
     );
