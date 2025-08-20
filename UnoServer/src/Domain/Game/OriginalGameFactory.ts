@@ -70,6 +70,7 @@ export const createOriginalGame = (): Game => {
     ];
 
     return {
+        id: uuid.v4(),
         activePlayerIndex: 0,
         players: [],
         color: 'blue',

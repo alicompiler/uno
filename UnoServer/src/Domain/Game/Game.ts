@@ -5,6 +5,7 @@ import { Player } from './Player';
 export type GameDirection = 'rtl' | 'ltr';
 
 export interface Game {
+    id: string;
     players: Player[];
 
     withdrewPile: Card[];

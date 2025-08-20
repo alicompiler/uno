@@ -1,8 +1,10 @@
+import { Router } from './Root/Router';
+
 function App() {
     return (
-        <>
-            <h1>Uno Game</h1>
-        </>
+        <div className="h-screen max-h-screen w-full">
+            <Router />
+        </div>
     );
 }
 

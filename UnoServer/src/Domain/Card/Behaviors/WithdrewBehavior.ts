@@ -14,7 +14,7 @@ export class WithdrewBehavior implements CardBehavior {
         const events: Event[] = [];
         const newGame = { ...game };
 
-        const count = newGame.withdrewPile.length > p.count ? newGame.withdrewPile.length : this.count;
+        const count = newGame.withdrewPile.length > this.count ? newGame.withdrewPile.length : this.count;
         const withdrawnCards: Card[] = [];
         for (let i = 1; i <= count; i++) {
             withdrawnCards.push(newGame.withdrewPile.pop()!);
