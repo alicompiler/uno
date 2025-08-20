@@ -4,6 +4,10 @@ import { DuplicateGameErrorCode, GameRepository } from './GameRepository';
 export class InMemoryGameRepository implements GameRepository {
     private games: Game[] = [];
 
+    getAll(): Game[] {
+        return this.games;
+    }
+
     addGame(game: Game): Game {
         if (this.games.find((g) => g.id === game.id)) {
             throw new Error(`${DuplicateGameErrorCode}-Cannot add game, the id: ${game.id} is already used`);

@@ -39,6 +39,13 @@ const createGameApi = (req: Request, res: Response) => {
     const payload = value as CreateGamePayload;
     const game = createGame(payload.type);
 
+    game.players.push({
+        id: payload.creator.id,
+        name: payload.creator.name,
+        cards: [],
+        isAdmin: true,
+    });
+
     try {
         const createdGame = gamesRepository.addGame(game);
         res.status(201).json(createdGame);
@@ -51,6 +58,62 @@ const createGameApi = (req: Request, res: Response) => {
     }
 };
 
+interface JoinGamePayload {
+    userId: string;
+    name: string;
+    gameId: string;
+}
+const joinGameSchema = Joi.object<JoinGamePayload>({
+    userId: Joi.string().uuid().required(),
+    gameId: Joi.string().uuid().required(),
+    name: Joi.string().min(1).required(),
+});
+
+const joinGameApi = (req: Request, res: Response) => {
+    const { error, value: payload } = joinGameSchema.validate(req.body, { abortEarly: false });
+
+    if (error) {
+        return res.status(400).json({
+            message: 'Validation error',
+            details: error.details.map((d) => d.message),
+        });
+    }
+
+    const game = gamesRepository.findById(payload.gameId);
+    if (!game) {
+        return res.status(404).json({
+            message: 'cannot find game',
+        });
+    }
+
+    if (game.players.some((p) => p.id === payload.userId)) {
+        return res.status(409).json({
+            message: 'already joined',
+        });
+    }
+
+    const MAX_PLAYERS_COUNT = 10;
+    if (game.players.length === MAX_PLAYERS_COUNT) {
+        return res.status(403).json({
+            message: 'game is full',
+        });
+    }
+
+    game.players.push({
+        id: payload.userId,
+        name: payload.name,
+        cards: [],
+        isAdmin: false,
+    });
+
+    res.status(201).send();
+};
+
 export const addGamesApi = (restApi: ExpressInstance) => {
     restApi.post('/api/games', createGameApi);
+    restApi.post('/api/games/:gameId/players', joinGameApi);
+    // TODO: remove
+    restApi.get('/api/games', (_, res) => {
+        res.status(200).json(gamesRepository.getAll());
+    });
 };
