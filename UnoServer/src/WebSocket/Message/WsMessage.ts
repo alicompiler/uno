@@ -1,6 +1,7 @@
 export enum MessageType {
     StartGame = 'start-game',
     PlayCard = 'play-card',
+    DrawCard = 'draw-card',
 }
 
 export type IncomingMessage =
@@ -14,4 +15,8 @@ export type IncomingMessage =
               cardId: string;
               extraPayload: unknown;
           };
+      }
+    | {
+          type: MessageType.DrawCard;
+          payload: never;
       };

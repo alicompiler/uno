@@ -1,3 +1,4 @@
+import { DrawCardActionHandler } from './Actions/DrawCardActionHandler';
 import { PlayCardActionHandler } from './Actions/PlayCardActionHandler';
 import { StartGameActionHandler } from './Actions/StartGameActionHandler';
 import { MessageType, IncomingMessage } from './Message/WsMessage';
@@ -13,5 +14,8 @@ export const handleWebSocketMessage = (data: string, gameId: string, playerId: s
 
         case MessageType.PlayCard:
             new PlayCardActionHandler(gameId, playerId).handleAction(ws, message);
+
+        case MessageType.DrawCard:
+            new DrawCardActionHandler(gameId, playerId).handleAction(ws);
     }
 };

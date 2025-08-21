@@ -5,6 +5,7 @@ import CWIcon from './../../assets/cw.png';
 import CCWIcon from './../../assets/ccw.png';
 import { UnoCardComponent } from '../../Components/UnoCard/UnoCard';
 import { TablePlayer } from './TablePlayer';
+import { useDrawCard } from '../../Domain/GamePlay/Actions/UseDrawCard';
 
 interface TableProps {
     gameState: GameStatus;
@@ -15,6 +16,7 @@ export const Table: React.FC<TableProps> = ({ meId, gameState }) => {
     const players = gameState.players;
     const direction = gameState.direction;
     const layout = getTableLayout(players.length);
+    const drawCard = useDrawCard();
     const arrangedPlayers = useMemo(() => {
         const meIndex = players.findIndex((p) => p.id === meId);
         return reArrangePlayers(players, meIndex);
@@ -49,7 +51,10 @@ export const Table: React.FC<TableProps> = ({ meId, gameState }) => {
                     ) : null}
                 </div>
                 <div className="p-8">
-                    <button className="border-2 border-white bg-orange-500 text-white rounded px-4 py-2 cursor-pointer hover:opacity-70">
+                    <button
+                        className="border-2 border-white bg-orange-500 text-white rounded px-4 py-2 cursor-pointer hover:opacity-70"
+                        onClick={() => drawCard()}
+                    >
                         Drew Card
                     </button>
                 </div>

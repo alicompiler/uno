@@ -18,6 +18,7 @@ export interface Game {
     activePlayerIndex: number;
 
     hasStarted: boolean;
+    drawCount: number;
 }
 
 export interface GameStatus {
@@ -65,6 +66,7 @@ export function playCard(game: Game, card: Card, payload: unknown): { game: Game
     newGame.discardPile.push(card);
     const currentPlayer = newGame.players[game.activePlayerIndex];
     currentPlayer.cards = currentPlayer.cards.filter((c) => c.id !== card.id);
+    newGame.drawCount = 0;
 
     return {
         game: newGame,
@@ -79,6 +81,7 @@ export function withdrewCard(game: Game): { game: Game; events: Event[] } {
     if (withdrawnCard) {
         currentPlayer.cards.push(withdrawnCard);
     }
+    newGame.drawCount = newGame.drawCount + 1;
 
     const events = [createWithdrewEvent(currentPlayer.id, 1)];
     return {

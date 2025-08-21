@@ -78,6 +78,7 @@ export const createOriginalGame = (): Game => {
         discardPile: [],
         withdrewPile: cards,
         hasStarted: false,
+        drawCount: 0,
     };
 };
 
