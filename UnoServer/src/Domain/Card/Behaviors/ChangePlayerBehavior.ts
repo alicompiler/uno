@@ -4,9 +4,10 @@ import { CardBehavior } from '../CardBehavior';
 
 export abstract class ChangePlayerBehavior implements CardBehavior {
     execute(game: Game, _: unknown): { game: Game; events: Event[] } {
+        console.log('changing player behavior');
         const newGame = { ...game };
         const events: Event[] = [];
-        const newPosition = this.getNewPosition(game);
+        const newPosition = this.getNewPosition(newGame);
         const nextPlayer = newGame.players[newPosition];
         events.push(...this.getEvents(nextPlayer.id));
         newGame.activePlayerIndex = newPosition;

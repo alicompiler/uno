@@ -1,9 +1,9 @@
 import { buildGameStatus, Game, GameStatus } from '../../Domain/Game/Game';
 import { buildOutgoingMessage, OutgoingMessageType } from './BaseResponse';
 
-export function createGameStatusResponse(game: Game): string {
+export function createGameStatusResponse(game: Game, userId: string): string {
     return buildOutgoingMessage({
         type: OutgoingMessageType.GameStatus,
-        payload: buildGameStatus(game),
+        payload: buildGameStatus(game, userId),
     });
 }

@@ -29,7 +29,8 @@ export interface GameStatus {
     direction: GameDirection;
     hasStarted: boolean;
 
-    activePlayer: { id: string; name: string; cards: Card[] };
+    activePlayer: { id: string; name: string };
+    myCards: Card[];
 }
 
 export function canPlayCard(game: Game, card: Card): boolean {
@@ -86,9 +87,10 @@ export function withdrewCard(game: Game): { game: Game; events: Event[] } {
     };
 }
 
-export function buildGameStatus(game: Game): GameStatus {
+export function buildGameStatus(game: Game, playerId: string): GameStatus {
     const topCard = game.discardPile.length > 0 ? game.discardPile[game.discardPile.length - 1] : undefined;
     const activePlayer = game.players[game.activePlayerIndex];
+    const me = game.players.find((g) => g.id === playerId);
     return {
         id: game.id,
         players: [...game.players],
@@ -99,8 +101,8 @@ export function buildGameStatus(game: Game): GameStatus {
         activePlayer: {
             id: activePlayer.id,
             name: activePlayer.name,
-            cards: activePlayer.cards,
         },
+        myCards: me!.cards,
     };
 }
 

@@ -5,11 +5,13 @@ import { useGamePlay } from '../../Domain/GamePlay/UseGamePlay';
 import { useEffect, useState } from 'react';
 import { getProfile } from '../../Domain/Profile/Profile';
 import { HandOfCards } from './HandOfCards';
+import { usePlayCard } from '../../Domain/GamePlay/Actions/UsePlayCard';
 
 export const GameStarted: React.FC = () => {
     const [myId, setMyId] = useState('');
     const gamePlay = useGamePlay();
     const gameState = gamePlay.gameState!;
+    const playCard = usePlayCard();
 
     useEffect(() => {
         const profile = getProfile();
@@ -25,10 +27,7 @@ export const GameStarted: React.FC = () => {
                 <Table gameState={gameState} meId={myId} />
             </div>
             <div>
-                <HandOfCards
-                    cards={gameState.activePlayer.cards}
-                    onDiscardCard={(c) => alert(`Discard Card: ${c.value} ${c.color}`)}
-                />
+                <HandOfCards cards={gameState.myCards} onDiscardCard={(c) => playCard(c.id, {})} />
             </div>
         </>
     );

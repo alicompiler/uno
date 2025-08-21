@@ -10,5 +10,7 @@ export interface GameStatus {
 
     hasStarted: boolean;
 
-    activePlayer: { id: string; name: string; cards: UnoCard[] };
+    activePlayer: { id: string; name: string };
+
+    myCards: UnoCard[];
 }

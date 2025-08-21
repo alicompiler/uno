@@ -16,7 +16,6 @@ export const GameInfoBar: React.FC = () => {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            console.log('tick');
             setTime((t) => (t + 1) % 60);
         }, 1000);
         return () => clearInterval(intervalId);

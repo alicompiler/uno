@@ -2,7 +2,6 @@ import { WebSocket } from 'ws';
 import { IncomingMessage } from 'http';
 import { registerConnection } from './Connections';
 import { getServiceProvider } from '../Core/ServiceProvider';
-import { buildGameStatus } from '../Domain/Game/Game';
 import { GameStatusEvent } from './Events/GameStatusEvent';
 import { handleWebSocketMessage } from './WebSocketMessageHandler';
 

@@ -1,4 +1,4 @@
-import { buildGameStatus, Game } from '../../Domain/Game/Game';
+import { Game } from '../../Domain/Game/Game';
 import { getConnectionsForGame } from '../Connections';
 import { createGameStatusResponse } from '../Response/GameStatusResponse';
 import { WsGameEvent } from './WsGameEvent';
@@ -10,8 +10,10 @@ export class GameStatusEvent implements WsGameEvent {
             game.players.map((p) => p.id)
         );
 
-        const response = createGameStatusResponse(game);
-
-        connections.forEach((ws) => ws.send(response));
+        const keys = Object.keys(connections);
+        keys.forEach((pId) => {
+            const ws = connections[pId];
+            ws.send(createGameStatusResponse(game, pId));
+        });
     }
 }
