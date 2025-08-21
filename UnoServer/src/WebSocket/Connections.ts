@@ -25,3 +25,7 @@ export const registerConnection = (gameId: string, playerId: string, ws: WebSock
 
     playerConnections[gameId] = ws;
 };
+
+export const getConnectionsForGame = (gameId: string, playersId: string[]): WebSocket[] => {
+    return playersId.map((pId) => getConnection(pId, gameId)).filter((c) => c !== null);
+};

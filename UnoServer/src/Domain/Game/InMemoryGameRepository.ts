@@ -1,5 +1,6 @@
+import { DuplicateGameErrorCode } from './ErrorCodes';
 import { Game } from './Game';
-import { DuplicateGameErrorCode, GameRepository } from './GameRepository';
+import { GameRepository } from './GameRepository';
 
 export class InMemoryGameRepository implements GameRepository {
     private games: Game[] = [];
@@ -23,5 +24,13 @@ export class InMemoryGameRepository implements GameRepository {
     findById(id: string): Game | null {
         const game = this.games.find((g) => g.id === id);
         return game ?? null;
+    }
+
+    update(game: Game): void {
+        const gameIndex = this.games.findIndex((g) => g.id === game.id);
+        if (gameIndex < 0) {
+            throw Error('cannot update game, the game is not exists');
+        }
+        this.games[gameIndex] = game;
     }
 }

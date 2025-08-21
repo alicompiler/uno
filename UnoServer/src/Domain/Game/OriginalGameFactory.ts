@@ -77,6 +77,7 @@ export const createOriginalGame = (): Game => {
         direction: 'ltr',
         discardPile: [],
         withdrewPile: cards,
+        hasStarted: false,
     };
 };
 

@@ -5,6 +5,5 @@ export interface GameRepository {
     addGame(game: Game): Game;
     removeById(id: string): void;
     findById(id: string): Game | null;
+    update(game: Game): void;
 }
-
-export const DuplicateGameErrorCode = 'GAME-100';

@@ -1,64 +1,21 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import { UnoCardComponent } from '../../Components/UnoCard/UnoCard';
-import CWIcon from './../../assets/cw.png';
-import CCWIcon from './../../assets/cw.png';
-import type { GameStatus } from '../../Domain/Game/GamesService';
-import { getProfileOrCreateIfNotExists } from '../../Domain/Profile/Profile';
 import type { UnoCard } from '../../Domain/Card/UnoCard';
+import { GamePlayProvider } from '../../Domain/GamePlay/GamePlayProvider';
+import { default as CCWIcon, default as CWIcon } from './../../assets/cw.png';
+import { GamePlayContainer } from './GamePlayContainer';
+import type { GameStatus } from '../../Domain/Message/Incoming/GameStatusMessagePayload';
 
 export type ConnectionStatus = 'disconnected' | 'connecting' | 'connected';
 
 export const GamePlayPage: React.FC = () => {
-    const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('disconnected');
     const { gameId } = useParams() as { gameId: string };
-    const [gameStatus, setGameStatus] = useState<GameStatus | null>(null);
-    const ws = useRef<WebSocket | null>(null);
-
-    useEffect(() => {
-        const profile = getProfileOrCreateIfNotExists();
-        ws.current = new WebSocket(`ws://localhost:3001?gameId=${gameId}&playerId=${profile.name}`);
-        setConnectionStatus('connecting');
-        ws.current.onopen = () => {
-            setConnectionStatus('connected');
-        };
-
-        ws.current.onmessage = (message) => {
-            const data = JSON.parse(message.data.toString());
-            if (data.event === 'game-status') {
-                setGameStatus(data.payload);
-            }
-        };
-
-        ws.current.onclose = () => {
-            setConnectionStatus('disconnected');
-        };
-
-        return () => {
-            ws.current?.close();
-            setConnectionStatus('disconnected');
-            console.log('close the connection');
-        };
-    }, [gameId]);
 
     return (
-        <div className="flex items-center justify-center h-full flex-col gap-8">
-            <p>Connection Status: {connectionStatus}</p>
-            <Table players={gameStatus?.players ?? []} meId="ali" activePlayer={6} direction="rtl" />
-            <div>
-                <HandOfCards />
-                <div className="flex items-center justify-center gap-4">
-                    <p className="text-md text-center">Cards Count = 9</p>
-                    <button className="p-2 border-1 border-indigo-500 rounded text-sm cursor-pointer">
-                        Sort By Color
-                    </button>
-                    <button className="p-2 border-1 border-indigo-500 rounded text-sm cursor-pointer">
-                        Sort By Value
-                    </button>
-                    <button className="p-2 border-1 border-indigo-500 rounded text-sm cursor-pointer">Randomize</button>
-                </div>
-            </div>
-        </div>
+        <GamePlayProvider gameId={gameId}>
+            <GamePlayContainer />
+        </GamePlayProvider>
     );
 };
 

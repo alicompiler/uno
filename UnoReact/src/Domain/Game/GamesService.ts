@@ -2,15 +2,6 @@ const baseUrl = 'http://localhost:3000';
 import Axios from 'axios';
 import type { UnoCard } from '../Card/UnoCard';
 
-export interface GameStatus {
-    id: string;
-
-    players: { id: string; name: string; isAdmin: boolean }[];
-    topCard?: UnoCard;
-    withdrewPileCount: number;
-    direction: 'rtl' | 'ltr';
-}
-
 interface Player {
     name: string;
     id: string;

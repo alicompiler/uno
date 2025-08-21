@@ -3,7 +3,7 @@ import { getServiceProvider } from '../../Core/ServiceProvider';
 import { Request, Response } from 'express';
 import Joi from 'joi';
 import { createGame, GameType, gameTypeValues } from '../../Domain/Game/GameFactory';
-import { DuplicateGameErrorCode } from '../../Domain/Game/GameRepository';
+import { DuplicateGameErrorCode } from '../../Domain/Game/ErrorCodes';
 
 const serviceProvider = getServiceProvider();
 const gamesRepository = serviceProvider.getGameRepository();

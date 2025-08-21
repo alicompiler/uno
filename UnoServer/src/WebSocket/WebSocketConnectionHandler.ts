@@ -3,6 +3,8 @@ import { IncomingMessage } from 'http';
 import { registerConnection } from './Connections';
 import { getServiceProvider } from '../Core/ServiceProvider';
 import { buildGameStatus } from '../Domain/Game/Game';
+import { GameStatusEvent } from './Events/GameStatusEvent';
+import { handleWebSocketMessage } from './WebSocketMessageHandler';
 
 const serviceProvider = getServiceProvider();
 const gamesRepository = serviceProvider.getGameRepository();
@@ -29,14 +31,12 @@ export const createWebSocketConnectionHandler = (ws: WebSocket, req: IncomingMes
 
     console.log(`Player connected: Game Id: ${gameId} , Player Id: ${playerId}`);
 
-    ws.on('message', () => {});
+    ws.on('message', (data) => {
+        handleWebSocketMessage(data.toString(), gameId, playerId, ws);
+    });
 
     ws.on('close', () => {});
 
-    const gameStatus = buildGameStatus(game);
-    const message = {
-        event: 'game-status',
-        payload: gameStatus,
-    };
-    ws.send(JSON.stringify(message));
+    const gameStatusEvent = new GameStatusEvent();
+    gameStatusEvent.send(game);
 };

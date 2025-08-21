@@ -16,6 +16,8 @@ export interface Game {
     color: CardColor;
 
     activePlayerIndex: number;
+
+    hasStarted: boolean;
 }
 
 export interface GameStatus {
@@ -25,6 +27,7 @@ export interface GameStatus {
     topCard?: Card;
     withdrewPileCount: number;
     direction: GameDirection;
+    hasStarted: boolean;
 }
 
 export function canPlayCard(game: Game, card: Card): boolean {
@@ -89,5 +92,6 @@ export function buildGameStatus(game: Game): GameStatus {
         topCard,
         withdrewPileCount: game.withdrewPile.length,
         direction: game.direction,
+        hasStarted: game.hasStarted,
     };
 }
