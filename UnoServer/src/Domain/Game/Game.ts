@@ -1,4 +1,4 @@
-import { Card, CardColor } from '../Card/Card';
+import { Card, CardColor, cardColors } from '../Card/Card';
 import { createWithdrewEvent, Event } from '../Event/Event';
 import { Player } from './Player';
 
@@ -23,11 +23,13 @@ export interface Game {
 export interface GameStatus {
     id: string;
 
-    players: { id: string; name: string; isAdmin: boolean }[];
+    players: { id: string; name: string; isAdmin: boolean; cards: Card[] }[];
     topCard?: Card;
     withdrewPileCount: number;
     direction: GameDirection;
     hasStarted: boolean;
+
+    activePlayer: { id: string; name: string; cards: Card[] };
 }
 
 export function canPlayCard(game: Game, card: Card): boolean {
@@ -86,6 +88,7 @@ export function withdrewCard(game: Game): { game: Game; events: Event[] } {
 
 export function buildGameStatus(game: Game): GameStatus {
     const topCard = game.discardPile.length > 0 ? game.discardPile[game.discardPile.length - 1] : undefined;
+    const activePlayer = game.players[game.activePlayerIndex];
     return {
         id: game.id,
         players: [...game.players],
@@ -93,5 +96,40 @@ export function buildGameStatus(game: Game): GameStatus {
         withdrewPileCount: game.withdrewPile.length,
         direction: game.direction,
         hasStarted: game.hasStarted,
+        activePlayer: {
+            id: activePlayer.id,
+            name: activePlayer.name,
+            cards: activePlayer.cards,
+        },
     };
 }
+
+export const startGame = (game: Game) => {
+    if (game.withdrewPile.length <= game.players.length * 7 || game.players.length < 2 || game.hasStarted) {
+        throw new Error('cannot start game, invalid state');
+    }
+
+    game.withdrewPile = game.withdrewPile
+        .map((value) => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value);
+
+    const numberOfCardsForEachPlayer = 7;
+    game.players.forEach((p) => {
+        const cards: Card[] = [];
+        for (let i = 0; i < numberOfCardsForEachPlayer; i++) {
+            cards.push(game.withdrewPile.pop()!);
+        }
+        p.cards = cards;
+    });
+
+    const topCard = game.withdrewPile.pop();
+    game.discardPile.push(topCard!);
+
+    game.activePlayerIndex = Math.floor(Math.random() * game.players.length);
+
+    const randomColor = cardColors[Math.floor(Math.random() * cardColors.length)];
+    game.color = topCard!.isWild ? randomColor : topCard!.color;
+
+    game.hasStarted = true;
+};

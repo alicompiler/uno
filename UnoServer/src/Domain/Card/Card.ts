@@ -1,6 +1,7 @@
 import { CardBehavior } from './CardBehavior';
 
 export type CardColor = 'red' | 'green' | 'yellow' | 'blue';
+export const cardColors: CardColor[] = ['red', 'blue', 'green', 'yellow'];
 
 export type CardValue =
     | '0'

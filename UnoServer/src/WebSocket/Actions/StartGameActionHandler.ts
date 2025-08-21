@@ -4,6 +4,7 @@ import { getServiceProvider } from '../../Core/ServiceProvider';
 import { createErrorResponse } from '../Response/ErrorResponse';
 import { GameNotFoundErrorCode, PlayerNotAdminErrorCode, PlayerNotFoundErrorCode } from '../../Domain/Game/ErrorCodes';
 import { GameStatusEvent } from '../Events/GameStatusEvent';
+import { startGame } from '../../Domain/Game/Game';
 
 const sp = getServiceProvider();
 const gameRepository = sp.getGameRepository();
@@ -41,8 +42,7 @@ export class StartGameActionHandler implements WsActionHandler {
             return;
         }
 
-        game.hasStarted = true;
-        gameRepository.update(game);
+        startGame(game);
 
         const gameStatusEvent = new GameStatusEvent();
         gameStatusEvent.send(game);

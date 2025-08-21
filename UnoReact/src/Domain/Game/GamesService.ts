@@ -1,6 +1,6 @@
 const baseUrl = 'http://localhost:3000';
 import Axios from 'axios';
-import type { UnoCard } from '../Card/UnoCard';
+import type { GameStatus } from '../Message/Incoming/GameStatusMessagePayload';
 
 interface Player {
     name: string;
