@@ -6,21 +6,27 @@ import CCWIcon from './../../assets/ccw.png';
 import { UnoCardComponent } from '../../Components/UnoCard/UnoCard';
 import { TablePlayer } from './TablePlayer';
 import { useDrawCard } from '../../Domain/GamePlay/Actions/UseDrawCard';
+import { useSkipNoCards } from '../../Domain/GamePlay/Actions/UseSkipNoCards';
 
 interface TableProps {
     gameState: GameStatus;
     meId: string;
 }
 
+const MAX_DRAW_COUNT = 1;
+
 export const Table: React.FC<TableProps> = ({ meId, gameState }) => {
     const players = gameState.players;
     const direction = gameState.direction;
     const layout = getTableLayout(players.length);
     const drawCard = useDrawCard();
+    const skipNoCard = useSkipNoCards();
     const arrangedPlayers = useMemo(() => {
         const meIndex = players.findIndex((p) => p.id === meId);
         return reArrangePlayers(players, meIndex);
     }, [players, meId]);
+
+    const isMyTurn = gameState.activePlayer.id === meId;
 
     let pointer = 1;
     const left: GameStatus['players'] = [];
@@ -51,12 +57,25 @@ export const Table: React.FC<TableProps> = ({ meId, gameState }) => {
                     ) : null}
                 </div>
                 <div className="p-8">
-                    <button
-                        className="border-2 border-white bg-orange-500 text-white rounded px-4 py-2 cursor-pointer hover:opacity-70"
-                        onClick={() => drawCard()}
-                    >
-                        Drew Card
-                    </button>
+                    {isMyTurn ? (
+                        <>
+                            {gameState.drawCount >= MAX_DRAW_COUNT ? (
+                                <button
+                                    className="border-2 border-white bg-violet-500 text-white rounded px-4 py-2 cursor-pointer hover:opacity-70"
+                                    onClick={() => skipNoCard()}
+                                >
+                                    Skip No Card
+                                </button>
+                            ) : (
+                                <button
+                                    className="border-2 border-white bg-orange-500 text-white rounded px-4 py-2 cursor-pointer hover:opacity-70"
+                                    onClick={() => drawCard()}
+                                >
+                                    Drew Card
+                                </button>
+                            )}
+                        </>
+                    ) : null}
                 </div>
             </div>
             <div className="absolute -left-10 top-1/5 h-2/3 flex flex-col items-center justify-around">

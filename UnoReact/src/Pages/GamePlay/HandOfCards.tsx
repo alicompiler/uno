@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { GameStatus } from '../../Domain/Message/Incoming/GameStatusMessagePayload';
 import type { UnoCard } from '../../Domain/Card/UnoCard';
 import { UnoCardComponent } from '../../Components/UnoCard/UnoCard';
@@ -13,6 +13,23 @@ export function HandOfCards({ cards, onDiscardCard }: Props) {
     const [selected, setSelected] = useState<string | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const dragRef = useRef({ isDown: false, startX: 0, scrollLeft: 0, moved: false });
+    const [previousCardsCount, setPreviousCardsCount] = useState(0);
+    const cardsLength = cards.length;
+
+    useEffect(() => {
+        if (previousCardsCount < cardsLength) {
+            const el = containerRef.current;
+            if (!el) {
+                return;
+            }
+
+            el.scrollTo({
+                left: el.scrollWidth,
+                behavior: 'smooth',
+            });
+        }
+        setPreviousCardsCount(cardsLength);
+    }, [cardsLength, previousCardsCount]);
 
     const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
         const el = containerRef.current;

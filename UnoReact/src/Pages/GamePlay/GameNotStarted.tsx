@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useGamePlay } from '../../Domain/GamePlay/UseGamePlay';
 import { useStartGameAction } from '../../Domain/GamePlay/Actions/UseStartGame';
+import Confetti from 'react-confetti';
 
 export const GameNotStarted: React.FC = () => {
     const gamePlay = useGamePlay();
@@ -26,6 +27,17 @@ export const GameNotStarted: React.FC = () => {
             >
                 Start
             </button>
+
+            {/* <Confetti width={window.innerWidth} height={window.innerHeight} /> */}
+
+            {/* <Confetti
+                width={window.innerWidth}
+                height={window.innerHeight}
+                numberOfPieces={100}
+                colors={['#6B7280', '#374151', '#111827']}
+                recycle={false}
+                gravity={0.3}
+            /> */}
         </div>
     );
 };

@@ -2,6 +2,7 @@ export enum MessageType {
     StartGame = 'start-game',
     PlayCard = 'play-card',
     DrawCard = 'draw-card',
+    SkipNoCard = 'skip-no-card',
 }
 
 export type OutgoingMessage =
@@ -18,5 +19,9 @@ export type OutgoingMessage =
       }
     | {
           type: MessageType.DrawCard;
+          payload: never;
+      }
+    | {
+          type: MessageType.SkipNoCard;
           payload: never;
       };

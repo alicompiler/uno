@@ -6,8 +6,12 @@ import { useEffect, useState } from 'react';
 import { getProfile } from '../../Domain/Profile/Profile';
 import { HandOfCards } from './HandOfCards';
 import { usePlayCard } from '../../Domain/GamePlay/Actions/UsePlayCard';
+import { ChooseColorModal } from './ChooseColorModal';
+import type { UnoCard } from '../../Domain/Card/UnoCard';
 
 export const GameStarted: React.FC = () => {
+    const [isColorModalOpen, setIsColorModalOpen] = useState(false);
+    const [selectedCard, setSelectedCard] = useState<UnoCard | null>(null);
     const [myId, setMyId] = useState('');
     const gamePlay = useGamePlay();
     const gameState = gamePlay.gameState!;
@@ -27,8 +31,31 @@ export const GameStarted: React.FC = () => {
                 <Table gameState={gameState} meId={myId} />
             </div>
             <div>
-                <HandOfCards cards={gameState.myCards} onDiscardCard={(c) => playCard(c.id, {})} />
+                <HandOfCards
+                    cards={gameState.myCards}
+                    onDiscardCard={(c) => {
+                        if (c.isWild) {
+                            setIsColorModalOpen(true);
+                            setSelectedCard(c);
+                        } else {
+                            playCard(c.id, {});
+                        }
+                    }}
+                />
             </div>
+            {isColorModalOpen ? (
+                <ChooseColorModal
+                    onClose={() => setIsColorModalOpen(false)}
+                    onSelectColor={(color) => {
+                        if (selectedCard) {
+                            playCard(selectedCard.id, {
+                                color,
+                            });
+                            setSelectedCard(null);
+                        }
+                    }}
+                />
+            ) : null}
         </>
     );
 };

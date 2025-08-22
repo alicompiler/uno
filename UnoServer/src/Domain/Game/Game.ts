@@ -1,5 +1,6 @@
+import { NextPlayerBehavior } from '../Card/Behaviors/NextPlayerBehavior';
 import { Card, CardColor, cardColors } from '../Card/Card';
-import { createWithdrewEvent, Event } from '../Event/Event';
+import { createWithdrewEvent, Event, EventType } from '../Event/Event';
 import { Player } from './Player';
 
 export type GameDirection = 'rtl' | 'ltr';
@@ -18,6 +19,7 @@ export interface Game {
     activePlayerIndex: number;
 
     hasStarted: boolean;
+    finished: boolean;
     drawCount: number;
 }
 
@@ -32,6 +34,10 @@ export interface GameStatus {
 
     activePlayer: { id: string; name: string };
     myCards: Card[];
+
+    drawCount: number;
+    color: CardColor;
+    finished: boolean;
 }
 
 export function canPlayCard(game: Game, card: Card): boolean {
@@ -47,6 +53,10 @@ export function canPlayCard(game: Game, card: Card): boolean {
     }
 
     if (card.value == topCard.value) {
+        return true;
+    }
+
+    if (game.color === card.color) {
         return true;
     }
 
@@ -67,6 +77,20 @@ export function playCard(game: Game, card: Card, payload: unknown): { game: Game
     const currentPlayer = newGame.players[game.activePlayerIndex];
     currentPlayer.cards = currentPlayer.cards.filter((c) => c.id !== card.id);
     newGame.drawCount = 0;
+
+    if (!card.isWild && card.color !== newGame.color) {
+        newGame.color = card.color;
+    }
+
+    if (currentPlayer.cards.length === 0) {
+        events.push({
+            type: EventType.GameFinished,
+            payload: {
+                winner: { id: currentPlayer.id, name: currentPlayer.name },
+            },
+        });
+        newGame.finished = true;
+    }
 
     return {
         game: newGame,
@@ -90,6 +114,22 @@ export function withdrewCard(game: Game): { game: Game; events: Event[] } {
     };
 }
 
+export function skipNoCard(game: Game): { game: Game; events: Event[] } {
+    const nextPlayerBehavior = new NextPlayerBehavior();
+    const { game: newGame, events } = nextPlayerBehavior.execute(game, {});
+    newGame.drawCount = 0;
+    return {
+        game: newGame,
+        events,
+    };
+}
+
+export function getNextPlayerIndex(game: Game, step: number): number {
+    let newPosition = game.direction === 'ltr' ? game.activePlayerIndex + step : game.activePlayerIndex - step;
+    newPosition = (newPosition + game.players.length) % game.players.length;
+    return newPosition;
+}
+
 export function buildGameStatus(game: Game, playerId: string): GameStatus {
     const topCard = game.discardPile.length > 0 ? game.discardPile[game.discardPile.length - 1] : undefined;
     const activePlayer = game.players[game.activePlayerIndex];
@@ -106,6 +146,9 @@ export function buildGameStatus(game: Game, playerId: string): GameStatus {
             name: activePlayer.name,
         },
         myCards: me!.cards,
+        color: game.color,
+        drawCount: game.drawCount,
+        finished: game.finished,
     };
 }
 

@@ -34,6 +34,7 @@ export const GameInfoBar: React.FC = () => {
                 <p className="text-md">
                     Playing: {activePlayer.name} {activePlayer.id === profile?.id ? '(You)' : ''}
                 </p>
+                <p className={`text-md text-center p-1 bg-${gameState.color}-500`}>{gameState.color}</p>
             </div>
 
             <div>

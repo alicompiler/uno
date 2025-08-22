@@ -1,5 +1,5 @@
 import { createWithdrewEvent, Event } from '../../Event/Event';
-import { Game } from '../../Game/Game';
+import { Game, getNextPlayerIndex } from '../../Game/Game';
 import { Card } from '../Card';
 import { CardBehavior } from '../CardBehavior';
 
@@ -10,16 +10,16 @@ export class WithdrewBehavior implements CardBehavior {
         this.count = count;
     }
 
-    execute(game: Game, payload: unknown): { game: Game; events: Event[] } {
+    execute(game: Game, _: unknown): { game: Game; events: Event[] } {
         const events: Event[] = [];
         const newGame = { ...game };
 
-        const count = newGame.withdrewPile.length > this.count ? newGame.withdrewPile.length : this.count;
+        const count = newGame.withdrewPile.length < this.count ? newGame.withdrewPile.length : this.count;
         const withdrawnCards: Card[] = [];
         for (let i = 1; i <= count; i++) {
             withdrawnCards.push(newGame.withdrewPile.pop()!);
         }
-        const nextPlayer = game.players[game.activePlayerIndex];
+        const nextPlayer = game.players[getNextPlayerIndex(game, 1)];
         nextPlayer.cards.push(...withdrawnCards);
         events.push(createWithdrewEvent(nextPlayer.id, count));
 

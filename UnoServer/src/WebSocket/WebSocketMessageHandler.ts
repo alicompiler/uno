@@ -1,7 +1,8 @@
 import { DrawCardActionHandler } from './Actions/DrawCardActionHandler';
 import { PlayCardActionHandler } from './Actions/PlayCardActionHandler';
+import { SkipNoCardActionHandler } from './Actions/SkipNoCardActionHandler';
 import { StartGameActionHandler } from './Actions/StartGameActionHandler';
-import { MessageType, IncomingMessage } from './Message/WsMessage';
+import { MessageType, IncomingMessage } from './Message/IncomingMessage';
 import { WebSocket } from 'ws';
 
 export const handleWebSocketMessage = (data: string, gameId: string, playerId: string, ws: WebSocket) => {
@@ -14,8 +15,14 @@ export const handleWebSocketMessage = (data: string, gameId: string, playerId: s
 
         case MessageType.PlayCard:
             new PlayCardActionHandler(gameId, playerId).handleAction(ws, message);
+            break;
 
         case MessageType.DrawCard:
             new DrawCardActionHandler(gameId, playerId).handleAction(ws);
+            break;
+
+        case MessageType.SkipNoCard:
+            new SkipNoCardActionHandler(gameId, playerId).handleAction(ws);
+            break;
     }
 };

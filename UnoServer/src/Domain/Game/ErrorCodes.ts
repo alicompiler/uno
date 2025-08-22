@@ -5,4 +5,6 @@ export const PlayerNotAdminErrorCode = 'PLAYER-101';
 export const ItsNotYourTurnErrorCode = 'GAMEPLAY-100';
 export const InvalidCardErrorCode = 'GAMEPLAY-101';
 export const ExceededDrawTimesErrorCode = 'GAMEPLAY-102';
+export const DidNotExceedDrawTimesErrorCode = 'GAMEPLAY-103';
+export const InvalidCardPayloadErrorCode = 'GAMEPLAY-104';
 export const CardNotFoundErrorCode = 'CARD-100';

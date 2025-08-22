@@ -3,6 +3,7 @@ export enum EventType {
     SkipPlayer = 'skip-player',
     ReversePlayingDirection = 'reverse-playing-direction',
     ChangeColor = 'change-color',
+    GameFinished = 'game-finished',
 }
 
 export interface Event {

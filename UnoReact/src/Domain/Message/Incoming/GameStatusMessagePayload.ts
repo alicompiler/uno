@@ -1,4 +1,4 @@
-import type { UnoCard } from '../../Card/UnoCard';
+import type { CardColor, UnoCard } from '../../Card/UnoCard';
 
 export interface GameStatus {
     id: string;
@@ -13,4 +13,8 @@ export interface GameStatus {
     activePlayer: { id: string; name: string };
 
     myCards: UnoCard[];
+
+    drawCount: number;
+    color: CardColor;
+    finished: boolean;
 }

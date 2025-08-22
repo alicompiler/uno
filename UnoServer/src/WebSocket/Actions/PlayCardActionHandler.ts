@@ -1,17 +1,19 @@
 import { WebSocket } from 'ws';
 import { WsActionHandler } from './ActionHandler';
-import { IncomingMessage } from '../Message/WsMessage';
+import { IncomingMessage } from '../Message/IncomingMessage';
 import { createErrorResponse } from '../Response/ErrorResponse';
 import {
     CardNotFoundErrorCode,
     GameNotFoundErrorCode,
     InvalidCardErrorCode,
+    InvalidCardPayloadErrorCode,
     ItsNotYourTurnErrorCode,
     PlayerNotFoundErrorCode,
 } from '../../Domain/Game/ErrorCodes';
 import { getServiceProvider } from '../../Core/ServiceProvider';
 import { canPlayCard, playCard } from '../../Domain/Game/Game';
 import { GameStatusEvent } from '../Events/GameStatusEvent';
+import { CardColor, cardColors } from '../../Domain/Card/Card';
 
 const sp = getServiceProvider();
 const gameRepository = sp.getGameRepository();
@@ -51,8 +53,18 @@ export class PlayCardActionHandler implements WsActionHandler {
             return;
         }
 
+        if (card.isWild) {
+            const extraPayload = message.payload.extraPayload as { color: CardColor };
+
+            if (!extraPayload || !cardColors.includes(extraPayload.color)) {
+                const errorResponse = createErrorResponse('invalid payload', InvalidCardPayloadErrorCode);
+                ws.send(errorResponse);
+                return;
+            }
+        }
+
         if (!canPlayCard(game, card)) {
-            const errorResponse = createErrorResponse('its not your turn', InvalidCardErrorCode);
+            const errorResponse = createErrorResponse('cannot play card', InvalidCardErrorCode);
             ws.send(errorResponse);
             return;
         }

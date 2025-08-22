@@ -1,5 +1,5 @@
 import { Event } from '../../Event/Event';
-import { Game } from '../../Game/Game';
+import { Game, getNextPlayerIndex } from '../../Game/Game';
 import { CardBehavior } from '../CardBehavior';
 
 export abstract class ChangePlayerBehavior implements CardBehavior {
@@ -7,7 +7,7 @@ export abstract class ChangePlayerBehavior implements CardBehavior {
         console.log('changing player behavior');
         const newGame = { ...game };
         const events: Event[] = [];
-        const newPosition = this.getNewPosition(newGame);
+        const newPosition = getNextPlayerIndex(newGame, this.getStep());
         const nextPlayer = newGame.players[newPosition];
         events.push(...this.getEvents(nextPlayer.id));
         newGame.activePlayerIndex = newPosition;
@@ -15,13 +15,6 @@ export abstract class ChangePlayerBehavior implements CardBehavior {
             game: newGame,
             events,
         };
-    }
-
-    getNewPosition(game: Game): number {
-        const step = this.getStep() % game.players.length;
-        let newPosition = game.direction === 'ltr' ? game.activePlayerIndex + step : game.activePlayerIndex - step;
-        newPosition = (newPosition + game.players.length) % game.players.length;
-        return newPosition;
     }
 
     abstract getStep(): number;
