@@ -1,72 +1,33 @@
-import { ChangeColorBehavior } from '../Card/Behaviors/ChangeColorBehavior';
-import { NextPlayerBehavior } from '../Card/Behaviors/NextPlayerBehavior';
+import * as uuid from 'uuid';
+import { Game } from './Game';
+import { GameSettings } from './GameSetting';
+import { Card, CardValue } from '../Card/Card';
+import { createColoredCard, createColoredCards, createWildCards } from './GameFactory';
 import { ReverseBehavior } from '../Card/Behaviors/ReverseBehavior';
 import { SkipPlayerBehavior } from '../Card/Behaviors/SkipPlayerBehavior';
 import { WithdrewBehavior } from '../Card/Behaviors/WithdrewBehavior';
-import { Card, CardColor, CardValue } from '../Card/Card';
-import { Game } from './Game';
-import * as uuid from 'uuid';
+
+const originalGameSettings: GameSettings = {
+    startingNumber: 0,
+    endingNumber: 9,
+};
 
 export const createOriginalGame = (): Game => {
-    const cards = [
-        ...createNumberedCards('blue'),
-        ...createNumberedCards('yellow'),
-        ...createNumberedCards('green'),
-        ...createNumberedCards('red'),
-        ...createNumberedCards('blue'),
-        ...createNumberedCards('yellow'),
-        ...createNumberedCards('green'),
-        ...createNumberedCards('red'),
-        createReverseCard('blue'),
-        createReverseCard('blue'),
-        createReverseCard('yellow'),
-        createReverseCard('yellow'),
-        createReverseCard('red'),
-        createReverseCard('red'),
-        createReverseCard('green'),
-        createReverseCard('green'),
-        createPlusCard('blue', '1'),
-        createPlusCard('blue', '1'),
-        createPlusCard('yellow', '1'),
-        createPlusCard('yellow', '1'),
-        createPlusCard('green', '1'),
-        createPlusCard('green', '1'),
-        createPlusCard('red', '1'),
-        createPlusCard('red', '1'),
-        createPlusCard('blue', '2'),
-        createPlusCard('blue', '2'),
-        createPlusCard('yellow', '2'),
-        createPlusCard('yellow', '2'),
-        createPlusCard('green', '2'),
-        createPlusCard('green', '2'),
-        createPlusCard('red', '2'),
-        createPlusCard('red', '2'),
-        createPlusCard('blue', '4'),
-        createPlusCard('blue', '4'),
-        createPlusCard('yellow', '4'),
-        createPlusCard('yellow', '4'),
-        createPlusCard('green', '4'),
-        createPlusCard('green', '4'),
-        createPlusCard('red', '4'),
-        createPlusCard('red', '4'),
-        createSkipCard('blue'),
-        createSkipCard('blue'),
-        createSkipCard('yellow'),
-        createSkipCard('yellow'),
-        createSkipCard('green'),
-        createSkipCard('green'),
-        createSkipCard('red'),
-        createSkipCard('red'),
-        createWildCard(),
-        createWildCard(),
-        createWildCard(),
-        createWildCard(),
-        createWildPlusCard('4'),
-        createWildPlusCard('4'),
-        createWildPlusCard('4'),
-        createWildPlusCard('4'),
-        createWildReverseCard(),
-        createWildReverseCard(),
+    let numberedValues: CardValue[] = [];
+    for (let i = originalGameSettings.startingNumber; i <= originalGameSettings.endingNumber; i++) {
+        numberedValues.push(`${i}` as CardValue);
+    }
+
+    const cards: Card[] = [
+        ...createColoredCards(2, numberedValues, []),
+        ...createColoredCards(2, ['reverse'], [new ReverseBehavior()]),
+        ...createColoredCards(2, ['skip'], [new SkipPlayerBehavior()], true),
+        ...createColoredCards(2, ['plus1'], [new WithdrewBehavior(1), new SkipPlayerBehavior()], true),
+        ...createColoredCards(2, ['plus2'], [new WithdrewBehavior(2), new SkipPlayerBehavior()], true),
+        ...createColoredCards(2, ['plus4'], [new WithdrewBehavior(4), new SkipPlayerBehavior()], true),
+        ...createWildCards(4, [undefined], []),
+        ...createWildCards(4, ['plus4'], [new WithdrewBehavior(4), new SkipPlayerBehavior()], true),
+        ...createWildCards(2, ['reverse'], [new ReverseBehavior()]),
     ];
 
     return {
@@ -80,76 +41,5 @@ export const createOriginalGame = (): Game => {
         hasStarted: false,
         finished: false,
         drawCount: 0,
-    };
-};
-
-const createNumberedCards = (color: CardColor): Card[] => {
-    const cards: Card[] = [];
-    for (let i = 0; i < 10; i++) {
-        const card: Card = {
-            id: uuid.v4(),
-            color,
-            isWild: false,
-            value: `${i}` as CardValue,
-            behaviors: [new NextPlayerBehavior()],
-        };
-        cards.push(card);
-    }
-    return cards;
-};
-
-const createReverseCard = (color: CardColor): Card => {
-    return {
-        id: uuid.v4(),
-        isWild: false,
-        color,
-        value: 'reverse',
-        behaviors: [new ReverseBehavior(), new NextPlayerBehavior()],
-    };
-};
-
-const createPlusCard = (color: CardColor, plus: '1' | '2' | '4'): Card => {
-    return {
-        id: uuid.v4(),
-        isWild: false,
-        color,
-        value: `plus${plus}`,
-        behaviors: [new WithdrewBehavior(parseInt(plus)), new SkipPlayerBehavior()],
-    };
-};
-
-const createSkipCard = (color: CardColor): Card => {
-    return {
-        id: uuid.v4(),
-        isWild: false,
-        color,
-        value: 'skip',
-        behaviors: [new SkipPlayerBehavior()],
-    };
-};
-
-const createWildCard = (): Card => {
-    return {
-        id: uuid.v4(),
-        isWild: true,
-        behaviors: [new ChangeColorBehavior(), new NextPlayerBehavior()],
-    };
-};
-
-const createWildPlusCard = (plus: '1' | '2' | '4'): Card => {
-    return {
-        id: uuid.v4(),
-        isWild: true,
-        value: `plus${plus}`,
-        behaviors: [new ChangeColorBehavior(), new WithdrewBehavior(parseInt(plus))],
-    };
-};
-
-const createWildReverseCard = (): Card => {
-    return {
-        id: uuid.v4(),
-        isWild: true,
-        value: 'reverse',
-        behaviors: [new ChangeColorBehavior(), new ReverseBehavior(), new NextPlayerBehavior()],
     };
 };

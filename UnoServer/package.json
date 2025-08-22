@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
     "start": "npx ts-node server.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
@@ -23,7 +23,8 @@
     "globals": "^16.3.0",
     "ts-node": "^10.9.2",
     "typescript": "~5.9.2",
-    "typescript-eslint": "^8.40.0"
+    "typescript-eslint": "^8.40.0",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "body-parser": "^2.2.0",
