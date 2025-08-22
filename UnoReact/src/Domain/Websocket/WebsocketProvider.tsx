@@ -22,7 +22,6 @@ export const WebsocketProvider: React.FC<Props> = ({ gameId, onMessage, children
 
         ws.current.onmessage = (message) => {
             const data = JSON.parse(message.data.toString()) as IncomingMessage;
-            console.log('incoming message', message);
             onMessage(data, ws.current);
         };
 
@@ -33,7 +32,6 @@ export const WebsocketProvider: React.FC<Props> = ({ gameId, onMessage, children
         return () => {
             ws.current?.close();
             setConnectionStatus('disconnected');
-            console.log('close the connection');
         };
     }, [gameId, onMessage]);
 

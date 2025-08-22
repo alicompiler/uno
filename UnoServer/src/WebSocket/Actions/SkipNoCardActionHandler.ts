@@ -1,62 +1,25 @@
-import { getServiceProvider } from '../../Core/ServiceProvider';
-import {
-    DidNotExceedDrawTimesErrorCode,
-    GameNotFoundErrorCode,
-    ItsNotYourTurnErrorCode,
-    PlayerNotFoundErrorCode,
-} from '../../Domain/Errors/ErrorCodes';
-import { skipNoCard } from '../../Domain/Game/Game';
-import { GameStateEvent } from '../Events/GameStateEvent';
 import { WebSocket } from 'ws';
+import { DidNotExceedDrawTimesErrorCode } from '../../Domain/Errors/ErrorCodes';
+import { Game, skipNoCard } from '../../Domain/Game/Game';
+import { IncomingMessage } from '../Message/Incoming/IncomingMessage';
 import { createErrorResponse } from '../Message/Outgoing/ErrorMessagePayload';
-import { WsActionHandler } from './ActionHandler';
+import { BaseActionHandler } from './BaseActionHandler';
 
-const sp = getServiceProvider();
-const gameRepository = sp.getGameRepository();
-
+// TODO: should be moved to the settings
 const MAX_DRAW_COUNT = 1;
 
-export class SkipNoCardActionHandler implements WsActionHandler {
-    constructor(
-        private readonly gameId: string,
-        private readonly playerId: string
-    ) {}
-
-    handleAction(ws: WebSocket): void {
-        const game = gameRepository.findById(this.gameId);
-        if (!game) {
-            const errorResponse = createErrorResponse('cannot start game, cannot find the game', GameNotFoundErrorCode);
-            ws.send(errorResponse);
-            return;
-        }
-
-        const player = game.players.find((p) => p.id === this.playerId);
-        if (!player) {
-            const errorResponse = createErrorResponse(
-                'cannot start game, cannot find the player',
-                PlayerNotFoundErrorCode
-            );
-            ws.send(errorResponse);
-            return;
-        }
-
-        const currentTurnPlayer = game.players[game.activePlayerIndex];
-        if (currentTurnPlayer.id !== player.id) {
-            const errorResponse = createErrorResponse('its not your turn', ItsNotYourTurnErrorCode);
-            ws.send(errorResponse);
-            return;
-        }
-
+export class SkipNoCardActionHandler extends BaseActionHandler {
+    handle(ws: WebSocket, _: IncomingMessage, game: Game): Game | null {
         if (game.drawCount < MAX_DRAW_COUNT) {
-            const errorResponse = createErrorResponse("didn't exceed draw times", DidNotExceedDrawTimesErrorCode);
-            ws.send(errorResponse);
-            return;
+            this.sendError(ws, "didn't exceed draw times", DidNotExceedDrawTimesErrorCode);
+            return null;
         }
 
         const { game: updatedGame } = skipNoCard(game);
-        gameRepository.update(updatedGame);
+        return updatedGame;
+    }
 
-        const gameStatusEvent = new GameStateEvent();
-        gameStatusEvent.send(updatedGame);
+    protected checkTurn(): boolean {
+        return true;
     }
 }

@@ -15,14 +15,12 @@ export const createWebSocketConnectionHandler = (ws: WebSocket, req: IncomingMes
 
     if (!gameId || !playerId) {
         ws.close();
-        console.log('invalid payload connection closed');
         return;
     }
 
     const game = gamesRepository.findById(gameId);
     if (!game) {
         ws.close();
-        console.log('game not found, connection closed');
         return;
     }
 

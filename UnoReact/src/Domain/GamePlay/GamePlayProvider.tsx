@@ -11,7 +11,6 @@ export const GamePlayProvider: React.FC<Props> = ({ gameId, children }) => {
     const [gameStatus, setGameStatus] = useState<GameStatus | null>(null);
 
     const handleMessage = useCallback((message: IncomingMessage) => {
-        console.log(message.type);
         switch (message.type) {
             case IncomingMessageType.GameStatus:
                 setGameStatus(message.payload);

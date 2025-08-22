@@ -55,7 +55,6 @@ export function HandOfCards({ cards, onDiscardCard }: Props) {
     };
 
     const onCardClick = (id: string) => {
-        console.log('onCardClick');
         if (dragRef.current.moved) {
             dragRef.current.moved = false;
             return;

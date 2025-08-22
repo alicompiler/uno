@@ -10,7 +10,7 @@ export const handleWebSocketMessage = (data: string, gameId: string, playerId: s
 
     switch (message.type) {
         case MessageType.StartGame:
-            new StartGameActionHandler(gameId, playerId).handleAction(ws);
+            new StartGameActionHandler(gameId, playerId).handleAction(ws, message);
             break;
 
         case MessageType.PlayCard:
@@ -18,11 +18,11 @@ export const handleWebSocketMessage = (data: string, gameId: string, playerId: s
             break;
 
         case MessageType.DrawCard:
-            new DrawCardActionHandler(gameId, playerId).handleAction(ws);
+            new DrawCardActionHandler(gameId, playerId).handleAction(ws, message);
             break;
 
         case MessageType.SkipNoCard:
-            new SkipNoCardActionHandler(gameId, playerId).handleAction(ws);
+            new SkipNoCardActionHandler(gameId, playerId).handleAction(ws, message);
             break;
     }
 };

@@ -1,9 +1,9 @@
 import { Game } from '../../Domain/Game/Game';
 import { getConnectionsForGame } from '../Connections';
 import { createGameStatusResponse } from './../Message/Outgoing/GameStatePayload';
-import { WsGameEvent } from './WsGameEvent';
+import { GameEvent } from './GameEvent';
 
-export class GameStateEvent implements WsGameEvent {
+export class GameStateEvent implements GameEvent {
     send(game: Game): void {
         const connections = getConnectionsForGame(
             game.id,

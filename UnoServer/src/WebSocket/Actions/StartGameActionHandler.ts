@@ -1,54 +1,16 @@
 import { WebSocket } from 'ws';
-import { WsActionHandler } from './ActionHandler';
 import { getServiceProvider } from '../../Core/ServiceProvider';
-import { createErrorResponse } from '../Message/Outgoing/ErrorMessagePayload';
-import {
-    GameNotFoundErrorCode,
-    PlayerNotAdminErrorCode,
-    PlayerNotFoundErrorCode,
-} from '../../Domain/Errors/ErrorCodes';
-import { GameStateEvent } from '../Events/GameStateEvent';
-import { startGame } from '../../Domain/Game/Game';
+import { Game, startGame } from '../../Domain/Game/Game';
+import { IncomingMessage } from '../Message/Incoming/IncomingMessage';
+import { BaseActionHandler } from './BaseActionHandler';
 
-const sp = getServiceProvider();
-const gameRepository = sp.getGameRepository();
-
-export class StartGameActionHandler implements WsActionHandler {
-    constructor(
-        private readonly gameId: string,
-        private readonly playerId: string
-    ) {}
-
-    handleAction(ws: WebSocket): void {
-        const game = gameRepository.findById(this.gameId);
-        if (!game) {
-            const errorResponse = createErrorResponse('cannot start game, cannot find the game', GameNotFoundErrorCode);
-            ws.send(errorResponse);
-            return;
-        }
-
-        const player = game.players.find((p) => p.id === this.playerId);
-        if (!player) {
-            const errorResponse = createErrorResponse(
-                'cannot start game, cannot find the player',
-                PlayerNotFoundErrorCode
-            );
-            ws.send(errorResponse);
-            return;
-        }
-
-        if (!player.isAdmin) {
-            const errorResponse = createErrorResponse(
-                'cannot start game, player is not admin',
-                PlayerNotAdminErrorCode
-            );
-            ws.send(errorResponse);
-            return;
-        }
-
+export class StartGameActionHandler extends BaseActionHandler {
+    handle(_: WebSocket, __: IncomingMessage, game: Game): Game | null {
         startGame(game);
+        return game;
+    }
 
-        const gameStatusEvent = new GameStateEvent();
-        gameStatusEvent.send(game);
+    protected allowOnlyAdmins(): boolean {
+        return true;
     }
 }
