@@ -10,7 +10,7 @@ export class WithdrewBehavior implements CardBehavior {
         this.count = count;
     }
 
-    execute(game: Game, _: unknown): { game: Game; events: Event[] } {
+    execute(game: Game): { game: Game; events: Event[] } {
         const events: Event[] = [];
         const newGame = { ...game };
 

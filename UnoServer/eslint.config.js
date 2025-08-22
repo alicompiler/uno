@@ -15,7 +15,7 @@ export default tseslint.config([
     ],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.recommended,
+      globals: globals.node,
     },
   },
 ])

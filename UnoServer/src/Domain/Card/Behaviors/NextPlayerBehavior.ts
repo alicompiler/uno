@@ -6,7 +6,7 @@ export class NextPlayerBehavior extends ChangePlayerBehavior {
         return 1;
     }
 
-    getEvents(_: string): Event[] {
+    getEvents(): Event[] {
         return [];
     }
 }

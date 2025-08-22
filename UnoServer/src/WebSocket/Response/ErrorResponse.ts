@@ -1,4 +1,4 @@
-import { outgoingMessage, buildOutgoingMessage, OutgoingMessageType } from './BaseResponse';
+import { buildOutgoingMessage, OutgoingMessageType } from './BaseResponse';
 
 export interface ErrorMessagePayload {
     message: string;

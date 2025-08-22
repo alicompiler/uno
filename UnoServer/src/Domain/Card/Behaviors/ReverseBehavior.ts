@@ -3,7 +3,7 @@ import { Game } from '../../Game/Game';
 import { CardBehavior } from '../CardBehavior';
 
 export class ReverseBehavior implements CardBehavior {
-    execute(game: Game, _: unknown): { game: Game; events: Event[] } {
+    execute(game: Game): { game: Game; events: Event[] } {
         const newGame = { ...game };
         const events: Event[] = [];
         newGame.direction = newGame.direction === 'rtl' ? 'ltr' : 'rtl';

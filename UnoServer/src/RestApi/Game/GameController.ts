@@ -49,9 +49,11 @@ const createGameApi = (req: Request, res: Response) => {
     try {
         const createdGame = gamesRepository.addGame(game);
         res.status(201).json(createdGame);
-    } catch (e: any) {
-        if (e.message.startsWith(DuplicateGameErrorCode)) {
-            res.status(409).json({ message: 'Game already exists' });
+    } catch (e) {
+        if (e instanceof Error) {
+            if (e.message.startsWith(DuplicateGameErrorCode)) {
+                res.status(409).json({ message: 'Game already exists' });
+            }
         } else {
             res.status(500).json({ message: 'Internal server error' });
         }

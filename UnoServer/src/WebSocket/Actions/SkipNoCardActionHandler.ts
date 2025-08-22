@@ -5,7 +5,7 @@ import {
     ItsNotYourTurnErrorCode,
     PlayerNotFoundErrorCode,
 } from '../../Domain/Game/ErrorCodes';
-import { skipNoCard, withdrewCard } from '../../Domain/Game/Game';
+import { skipNoCard } from '../../Domain/Game/Game';
 import { GameStatusEvent } from '../Events/GameStatusEvent';
 import { WebSocket } from 'ws';
 import { createErrorResponse } from '../Response/ErrorResponse';

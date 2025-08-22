@@ -1,4 +1,4 @@
-import { buildGameStatus, Game, GameStatus } from '../../Domain/Game/Game';
+import { buildGameStatus, Game } from '../../Domain/Game/Game';
 import { buildOutgoingMessage, OutgoingMessageType } from './BaseResponse';
 
 export function createGameStatusResponse(game: Game, userId: string): string {
