@@ -9,7 +9,7 @@ import {
     InvalidCardPayloadErrorCode,
     ItsNotYourTurnErrorCode,
     PlayerNotFoundErrorCode,
-} from '../../Domain/Game/ErrorCodes';
+} from '../../Domain/Errors/ErrorCodes';
 import { getServiceProvider } from '../../Core/ServiceProvider';
 import { canPlayCard, playCard } from '../../Domain/Game/Game';
 import { GameStatusEvent } from '../Events/GameStatusEvent';

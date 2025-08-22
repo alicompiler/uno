@@ -2,7 +2,11 @@ import { WebSocket } from 'ws';
 import { WsActionHandler } from './ActionHandler';
 import { getServiceProvider } from '../../Core/ServiceProvider';
 import { createErrorResponse } from '../Response/ErrorResponse';
-import { GameNotFoundErrorCode, PlayerNotAdminErrorCode, PlayerNotFoundErrorCode } from '../../Domain/Game/ErrorCodes';
+import {
+    GameNotFoundErrorCode,
+    PlayerNotAdminErrorCode,
+    PlayerNotFoundErrorCode,
+} from '../../Domain/Errors/ErrorCodes';
 import { GameStatusEvent } from '../Events/GameStatusEvent';
 import { startGame } from '../../Domain/Game/Game';
 

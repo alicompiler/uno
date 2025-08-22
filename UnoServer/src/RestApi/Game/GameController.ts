@@ -2,8 +2,8 @@ import { ExpressInstance } from '../../../server';
 import { getServiceProvider } from '../../Core/ServiceProvider';
 import { Request, Response } from 'express';
 import Joi from 'joi';
-import { createGame, GameType, gameTypeValues } from '../../Domain/Game/GameFactory';
-import { DuplicateGameErrorCode } from '../../Domain/Game/ErrorCodes';
+import { createGame, GameType, gameTypeValues } from '../../Domain/Game/Factory/GameFactory';
+import { DuplicateGameErrorCode } from '../../Domain/Errors/ErrorCodes';
 
 const serviceProvider = getServiceProvider();
 const gamesRepository = serviceProvider.getGameRepository();

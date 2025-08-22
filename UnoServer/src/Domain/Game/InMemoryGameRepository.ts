@@ -1,4 +1,4 @@
-import { DuplicateGameErrorCode } from './ErrorCodes';
+import { DuplicateGameErrorCode } from '../Errors/ErrorCodes';
 import { Game } from './Game';
 import { GameRepository } from './GameRepository';
 

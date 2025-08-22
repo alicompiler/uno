@@ -6,6 +6,7 @@
         "esModuleInterop": true,
         "strict": true,
         "outDir": "dist",
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "types": ["vitest/globals", "vitest"]
     }
 }

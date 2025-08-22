@@ -1,11 +1,11 @@
 import * as uuid from 'uuid';
-import { Game } from './Game';
-import { GameSettings } from './GameSetting';
-import { Card, CardValue } from '../Card/Card';
-import { createColoredCard, createColoredCards, createWildCards } from './GameFactory';
-import { ReverseBehavior } from '../Card/Behaviors/ReverseBehavior';
-import { SkipPlayerBehavior } from '../Card/Behaviors/SkipPlayerBehavior';
-import { WithdrewBehavior } from '../Card/Behaviors/WithdrewBehavior';
+import { Game } from '../Game';
+import { GameSettings } from '../GameSetting';
+import { Card, CardValue } from '../../Card/Card';
+import { createColoredCards, createWildCards } from './../../Card/Factory/CardsFactory';
+import { ReverseBehavior } from '../../Card/Behaviors/ReverseBehavior';
+import { SkipPlayerBehavior } from '../../Card/Behaviors/SkipPlayerBehavior';
+import { WithdrewBehavior } from '../../Card/Behaviors/WithdrewBehavior';
 
 const originalGameSettings: GameSettings = {
     startingNumber: 0,
