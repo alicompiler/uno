@@ -116,7 +116,7 @@ export function withdrewCard(game: Game): { game: Game; events: Event[] } {
 
 export function skipNoCard(game: Game): { game: Game; events: Event[] } {
     const nextPlayerBehavior = new NextPlayerBehavior();
-    const { game: newGame, events } = nextPlayerBehavior.execute(game, {});
+    const { game: newGame, events } = nextPlayerBehavior.execute(game);
     newGame.drawCount = 0;
     return {
         game: newGame,
