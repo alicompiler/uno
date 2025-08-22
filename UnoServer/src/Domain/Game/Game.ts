@@ -65,6 +65,9 @@ export function playCard(game: Game, card: Card, payload: unknown): { game: Game
         newGame.color = card.color;
     }
 
+    const resetWithdrawPileEvents = resetWithdrawPileIfEmpty(newGame);
+    events.push(...resetWithdrawPileEvents);
+
     if (currentPlayer.cards.length === 0) {
         events.push({
             type: EventType.GameFinished,
@@ -94,22 +97,28 @@ export function withdrawCard(game: Game): { game: Game; events: Event[] } {
 
     const events = [createWithdrawEvent(currentPlayer.id, 1)];
 
-    if (newGame.withdrawPile.length === 0) {
-        const topCard = newGame.discardPile.pop();
-
-        newGame.withdrawPile = newGame.discardPile
-            .map((value) => ({ value, sort: Math.random() }))
-            .sort((a, b) => a.sort - b.sort)
-            .map(({ value }) => value);
-        newGame.discardPile = [topCard!];
-
-        events.push({ type: EventType.WithdrawPileReset, payload: {} });
-    }
+    const resetWithdrawPileEvents = resetWithdrawPileIfEmpty(newGame);
+    events.push(...resetWithdrawPileEvents);
 
     return {
         game: newGame,
         events,
     };
+}
+
+function resetWithdrawPileIfEmpty(game: Game): Event[] {
+    if (game.withdrawPile.length === 0) {
+        const topCard = game.discardPile.pop();
+
+        game.withdrawPile = game.discardPile
+            .map((value) => ({ value, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort)
+            .map(({ value }) => value);
+        game.discardPile = [topCard!];
+
+        return [{ type: EventType.WithdrawPileReset, payload: {} }];
+    }
+    return [];
 }
 
 export function skipNoCard(game: Game): { game: Game; events: Event[] } {

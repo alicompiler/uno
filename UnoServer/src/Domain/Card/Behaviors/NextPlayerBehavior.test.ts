@@ -1,4 +1,4 @@
-import { assertNoChanged as assertNotChanged, buildMockGame } from '../../../TestUtils/GameMocks';
+import { assertNotChanged as assertNotChanged, buildMockGame } from '../../../TestUtils/GameMocks';
 import { NextPlayerBehavior } from './NextPlayerBehavior';
 
 describe('NextPlayerBehavior', () => {

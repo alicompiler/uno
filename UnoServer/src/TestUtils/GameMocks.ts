@@ -14,11 +14,11 @@ export const buildMockGame = (): Game => {
             { id: 'p1', cards: [{ id: 'abc', isWild: true, behaviors: [] }], isAdmin: false, name: 'Player 1' },
             { id: 'p2', cards: [{ id: 'abc', isWild: true, behaviors: [] }], isAdmin: false, name: 'Player 2' },
         ],
-        withdrawPile: [],
+        withdrawPile: [{ id: 'test-card', isWild: true, behaviors: [] }],
     };
 };
 
-export const assertNoChanged = (oldGame: Game, newGame: Game, skipKeys: (keyof Game)[]) => {
+export const assertNotChanged = (oldGame: Game, newGame: Game, skipKeys: (keyof Game)[]) => {
     const keys = Object.keys(newGame) as (keyof Game)[];
 
     keys.filter((key) => !skipKeys.includes(key)).forEach((key) => {

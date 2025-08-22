@@ -184,6 +184,32 @@ describe('Game', () => {
                 },
             });
         });
+
+        it('should reset withdraw pile if empty', () => {
+            const game = buildMockGame();
+            const card: Card = {
+                id: 'discarded-card',
+                isWild: false,
+                color: 'red',
+                value: '1',
+                behaviors: [],
+            };
+            game.activePlayerIndex = 0;
+            game.players[0].cards = new Array(3)
+                .fill(0)
+                .map((_, i) => ({ id: `id-${i}`, isWild: true, behaviors: [] }));
+            game.withdrawPile = [];
+            game.discardPile = new Array(10)
+                .fill(0)
+                .map((_, i) => ({ id: `discard-id-${i}`, isWild: true, behaviors: [] }));
+
+            const { game: newGame, events } = playCard(game, card, {});
+
+            expect(newGame.withdrawPile.length).toEqual(10);
+            newGame.withdrawPile.forEach((c) => expect(c.id.startsWith('discard-id-')).toEqual(true));
+            expect(events.length).toEqual(1);
+            expect(events[0].type).toEqual(EventType.WithdrawPileReset);
+        });
     });
 
     describe('withdraw card', () => {
