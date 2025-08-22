@@ -13,11 +13,9 @@ export class ChangeColorBehavior implements CardBehavior {
         const events: Event[] = [];
         const p = payload as ChangeColorPayload;
 
-        const topCard = game.discardPile[game.discardPile.length - 1];
-
         newGame.color = p.color;
 
-        if (!topCard.isWild && topCard.color != p.color) {
+        if (game.color != p.color) {
             events.push(createChangeColorEvent(p.color));
         }
 

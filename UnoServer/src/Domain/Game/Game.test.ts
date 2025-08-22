@@ -1,25 +1,8 @@
+import { buildMockGame } from '../../TestUtils/GameMocks';
 import { Card, CardColor, cardColors } from '../Card/Card';
 import { CardBehavior } from '../Card/CardBehavior';
 import { EventType } from '../Event/Event';
 import { canPlayCard, Game, getNextPlayerIndex, playCard, skipNoCard, startGame, withdrawCard } from './Game';
-
-const buildMockGame = (): Game => {
-    return {
-        id: '',
-        activePlayerIndex: 0,
-        color: 'blue',
-        direction: 'ltr',
-        discardPile: [],
-        drawCount: 0,
-        finished: false,
-        hasStarted: true,
-        players: [
-            { id: 'p1', cards: [{ id: 'abc', isWild: true, behaviors: [] }], isAdmin: false, name: 'Player 1' },
-            { id: 'p2', cards: [{ id: 'abc', isWild: true, behaviors: [] }], isAdmin: false, name: 'Player 2' },
-        ],
-        withdrawPile: [],
-    };
-};
 
 describe('Game', () => {
     describe('can play card', () => {

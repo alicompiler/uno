@@ -1,7 +1,7 @@
 import { NextPlayerBehavior } from '../Card/Behaviors/NextPlayerBehavior';
 import { Card, CardColor, cardColors } from '../Card/Card';
 import { createWithdrawEvent, Event, EventType } from '../Event/Event';
-import { Player } from './Player';
+import { Player } from '../Player/Player';
 
 export type GameDirection = 'rtl' | 'ltr';
 

@@ -1,5 +1,5 @@
-import { GameRepository } from '../Domain/Game/GameRepository';
-import { InMemoryGameRepository } from '../Domain/Game/InMemoryGameRepository';
+import { GameRepository } from '../Domain/Game/Repository/GameRepository';
+import { InMemoryGameRepository } from '../Domain/Game/Repository/InMemoryGameRepository';
 import { ServiceProvider } from './ServiceProvider';
 
 export class InMemoryServiceProvider implements ServiceProvider {

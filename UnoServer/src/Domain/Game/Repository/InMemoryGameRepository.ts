@@ -1,5 +1,5 @@
-import { DuplicateGameErrorCode } from '../Errors/ErrorCodes';
-import { Game } from './Game';
+import { DuplicateGameErrorCode } from '../../Errors/ErrorCodes';
+import { Game } from '../Game';
 import { GameRepository } from './GameRepository';
 
 export class InMemoryGameRepository implements GameRepository {

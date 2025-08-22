@@ -1,4 +1,4 @@
-import { GameRepository } from '../Domain/Game/GameRepository';
+import { GameRepository } from '../Domain/Game/Repository/GameRepository';
 import { InMemoryServiceProvider } from './InMemoryServiceProvider';
 
 export interface ServiceProvider {
