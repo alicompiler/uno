@@ -1,7 +1,8 @@
 import type React from 'react';
 import { useGamePlay } from '../../Domain/GamePlay/UseGamePlay';
 import { useStartGameAction } from '../../Domain/GamePlay/Actions/UseStartGame';
-import Confetti from 'react-confetti';
+import { Button } from '../../Components/Button/Button';
+// import Confetti from 'react-confetti';
 
 export const GameNotStarted: React.FC = () => {
     const gamePlay = useGamePlay();
@@ -10,23 +11,20 @@ export const GameNotStarted: React.FC = () => {
 
     return (
         <div className="flex gap-4 flex-col">
-            <h2 className="text-xl">Players in the room:</h2>
-            <div className="max-h-64 overflow-auto">
+            <h2 className="text-xl">Joined:</h2>
+            <div className="max-h-64 min-h-40 w-64 overflow-auto border-2 border-cyan-400 p-2 rounded">
                 <ul>
-                    {players.map((p) => (
-                        <li key={p.id} className="text-md">
+                    {players.map((p, i) => (
+                        <li key={p.id} className={`text-md p-2 ${i % 2 == 0 ? 'bg-gray-500' : 'bg-gray-800'}`}>
                             {p.name} {p.isAdmin ? ' (Admin)' : ''}
                         </li>
                     ))}
                 </ul>
             </div>
 
-            <button
-                className="w-40 border-2 border-indigo-500 text-lg p-2 hover:bg-indigo-500 hover:text-white cursor-pointer"
-                onClick={() => startGame()}
-            >
+            <Button disabled={players.length < 2} size="lg" onClick={() => startGame()}>
                 Start
-            </button>
+            </Button>
 
             {/* <Confetti width={window.innerWidth} height={window.innerHeight} /> */}
 

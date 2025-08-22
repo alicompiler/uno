@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { changeProfileName, getProfileOrCreateIfNotExists, type Profile } from '../../Domain/Profile/Profile';
 import { createGame } from '../../Domain/Game/GamesService';
 import { useNavigate } from 'react-router';
+import { Button } from '../../Components/Button/Button';
+import { TextInput } from '../../Components/TextInput/TextInput';
 
 export const CreateGamePage: React.FC = () => {
     const [profile, setProfile] = useState<Profile | null>(null);
@@ -40,28 +42,11 @@ export const CreateGamePage: React.FC = () => {
         <div className="h-full flex items-center justify-center flex-col">
             <h1 className="text-2xl font-bold text-center mb-6">Create Game</h1>
             <form className="flex flex-col space-y-4">
-                <div className="flex flex-col">
-                    <label htmlFor="name" className="text-sm font-medium mb-1">
-                        Your Name
-                    </label>
-                    <input
-                        id="name"
-                        type="text"
-                        value={name}
-                        placeholder="Enter your name"
-                        onChange={(e) => setName(e.target.value)}
-                        className="w-72 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
+                <TextInput label="Your Name" value={name} onChange={(v) => setName(v)} />
 
-                <button
-                    type="submit"
-                    disabled={submitting}
-                    className="w-full bg-blue-600 text-white rounded-lg py-2 font-semibold hover:bg-blue-700 transition"
-                    onClick={onCreateGame}
-                >
+                <Button size="lg" disabled={submitting} onClick={onCreateGame}>
                     Create Game
-                </button>
+                </Button>
             </form>
         </div>
     );

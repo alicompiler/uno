@@ -26,18 +26,21 @@ export const GameInfoBar: React.FC = () => {
 
     return (
         <div className="w-full flex justify-between items-center p-4">
-            <div className="w-12 h-12 border-2 border-indigo-500 rounded-full flex items-center justify-center">
-                <p className="text-md text-indigo-500">{time}</p>
+            <div className="w-12 h-12 border-4 border-cyan-500 rounded-full flex items-center justify-center">
+                <p className="text-lg text-white">{time}</p>
             </div>
 
-            <div>
-                <p className="text-md">
+            <div className="w-44 flex flex-col items-center justify-center">
+                <p className="text-md w-full text-center">
                     Playing: {activePlayer.name} {activePlayer.id === profile?.id ? '(You)' : ''}
                 </p>
-                <p className={`text-md text-center p-1 bg-${gameState.color}-500`}>{gameState.color}</p>
+                <p className={`w-full text-md text-center p-1 bg-${gameState.color}-500 rounded`}>
+                    {gameState.color.toUpperCase()}
+                </p>
             </div>
 
-            <div>
+            <div className="flex items-center justify-center flex-col gap-2">
+                <p>Connection</p>
                 <StatusDot status={ws.connectionStatus} />
             </div>
         </div>

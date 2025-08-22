@@ -7,6 +7,7 @@ import { UnoCardComponent } from '../../Components/UnoCard/UnoCard';
 import { TablePlayer } from './TablePlayer';
 import { useDrawCard } from '../../Domain/GamePlay/Actions/UseDrawCard';
 import { useSkipNoCards } from '../../Domain/GamePlay/Actions/UseSkipNoCards';
+import { Button } from '../../Components/Button/Button';
 
 interface TableProps {
     gameState: GameStatus;
@@ -47,8 +48,11 @@ export const Table: React.FC<TableProps> = ({ meId, gameState }) => {
 
     return (
         <div className="relative">
-            <div className="bg-indigo-500 w-50 h-96 md:w-72 md:h-100 lg:w-80 lg:h-140 rounded-full shadow-lg flex flex-col gap-2 justify-between items-center text-white font-bold border-8 border-orange-400">
-                <div className="p-8">
+            <div
+                className={`bg-gray-700 w-50 h-96 md:w-72 md:h-100 lg:w-80 lg:h-140 rounded-full shadow-lg shadow-gray-500 flex flex-col gap-2 justify-between items-center text-white font-bold`}
+            >
+                <div className="p-8 flex flex-col items-center justify-center gap-2">
+                    <p className="text-lg">Play Direction</p>
                     <img src={direction === 'rtl' ? CWIcon : CCWIcon} className="w-8 h-8 invert-100" />
                 </div>
                 <div>
@@ -60,19 +64,13 @@ export const Table: React.FC<TableProps> = ({ meId, gameState }) => {
                     {isMyTurn ? (
                         <>
                             {gameState.drawCount >= MAX_DRAW_COUNT ? (
-                                <button
-                                    className="border-2 border-white bg-violet-500 text-white rounded px-4 py-2 cursor-pointer hover:opacity-70"
-                                    onClick={() => skipNoCard()}
-                                >
+                                <Button size="sm" onClick={() => skipNoCard()}>
                                     Skip No Card
-                                </button>
+                                </Button>
                             ) : (
-                                <button
-                                    className="border-2 border-white bg-orange-500 text-white rounded px-4 py-2 cursor-pointer hover:opacity-70"
-                                    onClick={() => drawCard()}
-                                >
+                                <Button size="sm" onClick={() => drawCard()}>
                                     Drew Card
-                                </button>
+                                </Button>
                             )}
                         </>
                     ) : null}
@@ -81,25 +79,29 @@ export const Table: React.FC<TableProps> = ({ meId, gameState }) => {
             <div className="absolute -left-10 top-1/5 h-2/3 flex flex-col items-center justify-around">
                 {left.map((p) => (
                     <div key={p.id} className="rotate-270">
-                        <TablePlayer id={p.id} name={p.name} isActive={false} />
+                        <TablePlayer id={p.id} name={p.name} isActive={p.id === gameState.activePlayer.id} />
                     </div>
                 ))}
             </div>
             <div className="absolute -right-10 top-1/5 h-2/3 flex flex-col items-center justify-around">
                 {right.map((p) => (
                     <div key={p.id} className="rotate-270">
-                        <TablePlayer id={p.id} name={p.name} isActive={false} />
+                        <TablePlayer id={p.id} name={p.name} isActive={p.id === gameState.activePlayer.id} />
                     </div>
                 ))}
             </div>
             <div className="absolute right-0 -left-0 -top-10 w-full flex items-center justify-center">
                 {top.map((p) => (
-                    <TablePlayer key={p.id} id={p.id} name={p.name} isActive={false} />
+                    <TablePlayer key={p.id} id={p.id} name={p.name} isActive={p.id === gameState.activePlayer.id} />
                 ))}
             </div>
             <div className="absolute right-0 left-0 -bottom-10 w-full flex items-center justify-center">
                 {arrangedPlayers[0] && (
-                    <TablePlayer id={arrangedPlayers[0].id} name={arrangedPlayers[0].name} isActive={false} />
+                    <TablePlayer
+                        id={arrangedPlayers[0].id}
+                        name={arrangedPlayers[0].name}
+                        isActive={arrangedPlayers[0].id === gameState.activePlayer.id}
+                    />
                 )}
             </div>
         </div>

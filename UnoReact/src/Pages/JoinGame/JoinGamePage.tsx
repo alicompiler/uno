@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { changeProfileName, getProfileOrCreateIfNotExists, type Profile } from '../../Domain/Profile/Profile';
 import { joinGame } from '../../Domain/Game/GamesService';
 import { useNavigate } from 'react-router';
+import { Button } from '../../Components/Button/Button';
+import { TextInput } from '../../Components/TextInput/TextInput';
 
 export const JoinGamePage: React.FC = () => {
     const [profile, setProfile] = useState<Profile | null>(null);
@@ -42,43 +44,18 @@ export const JoinGamePage: React.FC = () => {
         <div className="h-full flex items-center justify-center flex-col">
             <h1 className="text-2xl font-bold text-center mb-6">Join Game</h1>
             <form className="flex flex-col space-y-4">
-                <div className="flex flex-col">
-                    <label htmlFor="name" className="text-sm font-medium mb-1">
-                        Game Id
-                    </label>
-                    <input
-                        id="gameId"
-                        type="text"
-                        disabled={gameIdFromParams !== null}
-                        value={gameId}
-                        placeholder="Enter the game id"
-                        onChange={(e) => setGameId(e.target.value)}
-                        className="w-96 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-200"
-                    />
-                </div>
+                <TextInput
+                    label="Game Id"
+                    value={gameId}
+                    onChange={(v) => setGameId(v)}
+                    disabled={gameIdFromParams !== null}
+                />
 
-                <div className="flex flex-col">
-                    <label htmlFor="name" className="text-sm font-medium mb-1">
-                        Your Name
-                    </label>
-                    <input
-                        id="name"
-                        type="text"
-                        value={name}
-                        placeholder="Enter your name"
-                        onChange={(e) => setName(e.target.value)}
-                        className="w-96 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
+                <TextInput label="Your Name" value={name} onChange={(v) => setName(v)} />
 
-                <button
-                    type="submit"
-                    disabled={submitting}
-                    className="w-full bg-blue-600 text-white rounded-lg py-2 font-semibold hover:bg-blue-700 transition"
-                    onClick={onCreateGame}
-                >
+                <Button size="lg" disabled={submitting} onClick={onCreateGame}>
                     Join Game
-                </button>
+                </Button>
             </form>
         </div>
     );

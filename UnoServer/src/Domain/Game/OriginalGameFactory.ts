@@ -132,7 +132,7 @@ const createWildCard = (): Card => {
     return {
         id: uuid.v4(),
         isWild: true,
-        behaviors: [new ChangeColorBehavior()],
+        behaviors: [new ChangeColorBehavior(), new NextPlayerBehavior()],
     };
 };
 
@@ -150,6 +150,6 @@ const createWildReverseCard = (): Card => {
         id: uuid.v4(),
         isWild: true,
         value: 'reverse',
-        behaviors: [new ChangeColorBehavior(), new ReverseBehavior()],
+        behaviors: [new ChangeColorBehavior(), new ReverseBehavior(), new NextPlayerBehavior()],
     };
 };
