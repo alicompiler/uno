@@ -65,21 +65,21 @@ const CardCenter: React.FC<{ value: CardValue }> = ({ value }) => {
         case 'plus1':
             return (
                 <div>
-                    <p className="text-md">Withdrew</p>
+                    <p className="text-md">Withdraw</p>
                     <p className="text-xl">+1</p>
                 </div>
             );
         case 'plus2':
             return (
                 <div>
-                    <p className="text-md">Withdrew</p>
+                    <p className="text-md">Withdraw</p>
                     <p className="text-xl">+2</p>
                 </div>
             );
         case 'plus4':
             return (
                 <div>
-                    <p className="text-md">Withdrew</p>
+                    <p className="text-md">Withdraw</p>
                     <p className="text-xl">+4</p>
                 </div>
             );

@@ -12,4 +12,4 @@ players can create a room and invites others to the room, or can join a room.
   - invite players
 - Play
   - play a card
-  - withdrew a card
+  - withdraw a card

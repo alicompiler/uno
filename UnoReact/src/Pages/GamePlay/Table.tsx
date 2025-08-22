@@ -69,7 +69,7 @@ export const Table: React.FC<TableProps> = ({ meId, gameState }) => {
                                 </Button>
                             ) : (
                                 <Button size="sm" onClick={() => drawCard()}>
-                                    Drew Card
+                                    Draw Card
                                 </Button>
                             )}
                         </>

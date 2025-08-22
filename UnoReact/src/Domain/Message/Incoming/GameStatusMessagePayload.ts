@@ -5,7 +5,7 @@ export interface GameStatus {
 
     players: { id: string; name: string; isAdmin: boolean; cards: UnoCard[] }[];
     topCard?: UnoCard;
-    withdrewPileCount: number;
+    withdrawPileCount: number;
     direction: 'rtl' | 'ltr';
 
     hasStarted: boolean;
