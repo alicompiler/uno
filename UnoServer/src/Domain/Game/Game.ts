@@ -1,6 +1,6 @@
 import { NextPlayerBehavior } from '../Card/Behaviors/NextPlayerBehavior';
 import { Card, CardColor, cardColors } from '../Card/Card';
-import { createWithdrewEvent, Event, EventType } from '../Event/Event';
+import { createWithdrawEvent, Event, EventType } from '../Event/Event';
 import { Player } from './Player';
 
 export type GameDirection = 'rtl' | 'ltr';
@@ -9,7 +9,7 @@ export interface Game {
     id: string;
     players: Player[];
 
-    withdrewPile: Card[];
+    withdrawPile: Card[];
     discardPile: Card[];
 
     direction: GameDirection;
@@ -21,23 +21,6 @@ export interface Game {
     hasStarted: boolean;
     finished: boolean;
     drawCount: number;
-}
-
-export interface GameStatus {
-    id: string;
-
-    players: { id: string; name: string; isAdmin: boolean; cards: Card[] }[];
-    topCard?: Card;
-    withdrewPileCount: number;
-    direction: GameDirection;
-    hasStarted: boolean;
-
-    activePlayer: { id: string; name: string };
-    myCards: Card[];
-
-    drawCount: number;
-    color: CardColor;
-    finished: boolean;
 }
 
 export function canPlayCard(game: Game, card: Card): boolean {
@@ -98,16 +81,31 @@ export function playCard(game: Game, card: Card, payload: unknown): { game: Game
     };
 }
 
-export function withdrewCard(game: Game): { game: Game; events: Event[] } {
+// TODO: define canWithdrawCard
+
+export function withdrawCard(game: Game): { game: Game; events: Event[] } {
     const newGame = { ...game };
     const currentPlayer = newGame.players[game.activePlayerIndex];
-    const withdrawnCard = newGame.withdrewPile.pop();
+    const withdrawnCard = newGame.withdrawPile.pop();
     if (withdrawnCard) {
         currentPlayer.cards.push(withdrawnCard);
     }
     newGame.drawCount = newGame.drawCount + 1;
 
-    const events = [createWithdrewEvent(currentPlayer.id, 1)];
+    const events = [createWithdrawEvent(currentPlayer.id, 1)];
+
+    if (newGame.withdrawPile.length === 0) {
+        const topCard = newGame.discardPile.pop();
+
+        newGame.withdrawPile = newGame.discardPile
+            .map((value) => ({ value, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort)
+            .map(({ value }) => value);
+        newGame.discardPile = [topCard!];
+
+        events.push({ type: EventType.WithdrawPileReset, payload: {} });
+    }
+
     return {
         game: newGame,
         events,
@@ -130,34 +128,12 @@ export function getNextPlayerIndex(game: Game, step: number): number {
     return newPosition;
 }
 
-export function buildGameStatus(game: Game, playerId: string): GameStatus {
-    const topCard = game.discardPile.length > 0 ? game.discardPile[game.discardPile.length - 1] : undefined;
-    const activePlayer = game.players[game.activePlayerIndex];
-    const me = game.players.find((g) => g.id === playerId);
-    return {
-        id: game.id,
-        players: [...game.players],
-        topCard,
-        withdrewPileCount: game.withdrewPile.length,
-        direction: game.direction,
-        hasStarted: game.hasStarted,
-        activePlayer: {
-            id: activePlayer.id,
-            name: activePlayer.name,
-        },
-        myCards: me!.cards,
-        color: game.color,
-        drawCount: game.drawCount,
-        finished: game.finished,
-    };
-}
-
 export const startGame = (game: Game) => {
-    if (game.withdrewPile.length <= game.players.length * 7 || game.players.length < 2 || game.hasStarted) {
+    if (game.withdrawPile.length <= game.players.length * 7 || game.players.length < 2 || game.hasStarted) {
         throw new Error('cannot start game, invalid state');
     }
 
-    game.withdrewPile = game.withdrewPile
+    game.withdrawPile = game.withdrawPile
         .map((value) => ({ value, sort: Math.random() }))
         .sort((a, b) => a.sort - b.sort)
         .map(({ value }) => value);
@@ -166,12 +142,12 @@ export const startGame = (game: Game) => {
     game.players.forEach((p) => {
         const cards: Card[] = [];
         for (let i = 0; i < numberOfCardsForEachPlayer; i++) {
-            cards.push(game.withdrewPile.pop()!);
+            cards.push(game.withdrawPile.pop()!);
         }
         p.cards = cards;
     });
 
-    const topCard = game.withdrewPile.pop();
+    const topCard = game.withdrawPile.pop();
     game.discardPile.push(topCard!);
 
     game.activePlayerIndex = Math.floor(Math.random() * game.players.length);

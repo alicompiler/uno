@@ -5,7 +5,7 @@ import { Card, CardValue } from '../../Card/Card';
 import { createColoredCards, createWildCards } from './../../Card/Factory/CardsFactory';
 import { ReverseBehavior } from '../../Card/Behaviors/ReverseBehavior';
 import { SkipPlayerBehavior } from '../../Card/Behaviors/SkipPlayerBehavior';
-import { WithdrewBehavior } from '../../Card/Behaviors/WithdrewBehavior';
+import { WithdrawBehavior } from '../../Card/Behaviors/WithdrawBehavior';
 
 const originalGameSettings: GameSettings = {
     startingNumber: 0,
@@ -22,11 +22,11 @@ export const createOriginalGame = (): Game => {
         ...createColoredCards(2, numberedValues, []),
         ...createColoredCards(2, ['reverse'], [new ReverseBehavior()]),
         ...createColoredCards(2, ['skip'], [new SkipPlayerBehavior()], true),
-        ...createColoredCards(2, ['plus1'], [new WithdrewBehavior(1), new SkipPlayerBehavior()], true),
-        ...createColoredCards(2, ['plus2'], [new WithdrewBehavior(2), new SkipPlayerBehavior()], true),
-        ...createColoredCards(2, ['plus4'], [new WithdrewBehavior(4), new SkipPlayerBehavior()], true),
+        ...createColoredCards(2, ['plus1'], [new WithdrawBehavior(1), new SkipPlayerBehavior()], true),
+        ...createColoredCards(2, ['plus2'], [new WithdrawBehavior(2), new SkipPlayerBehavior()], true),
+        ...createColoredCards(2, ['plus4'], [new WithdrawBehavior(4), new SkipPlayerBehavior()], true),
         ...createWildCards(4, [undefined], []),
-        ...createWildCards(4, ['plus4'], [new WithdrewBehavior(4), new SkipPlayerBehavior()], true),
+        ...createWildCards(4, ['plus4'], [new WithdrawBehavior(4), new SkipPlayerBehavior()], true),
         ...createWildCards(2, ['reverse'], [new ReverseBehavior()]),
     ];
 
@@ -37,7 +37,7 @@ export const createOriginalGame = (): Game => {
         color: 'blue',
         direction: 'ltr',
         discardPile: [],
-        withdrewPile: cards,
+        withdrawPile: cards,
         hasStarted: false,
         finished: false,
         drawCount: 0,

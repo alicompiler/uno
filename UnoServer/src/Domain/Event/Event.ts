@@ -1,9 +1,10 @@
 export enum EventType {
-    Withdrew = 'withdrew',
+    Withdraw = 'withdraw',
     SkipPlayer = 'skip-player',
     ReversePlayingDirection = 'reverse-playing-direction',
     ChangeColor = 'change-color',
     GameFinished = 'game-finished',
+    WithdrawPileReset = 'withdraw-pile-reset',
 }
 
 export interface Event {
@@ -11,9 +12,9 @@ export interface Event {
     payload: unknown;
 }
 
-export function createWithdrewEvent(playerId: string, count: number): Event {
+export function createWithdrawEvent(playerId: string, count: number): Event {
     return {
-        type: EventType.Withdrew,
+        type: EventType.Withdraw,
         payload: {
             playerId,
             count,

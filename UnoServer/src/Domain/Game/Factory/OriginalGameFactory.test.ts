@@ -13,6 +13,6 @@ describe('Original Game Factory', () => {
         expect(game.hasStarted).toEqual(false);
         expect(game.players.length).toEqual(0);
         expect(game.activePlayerIndex).toEqual(0);
-        expect(game.withdrewPile.length).toEqual(130);
+        expect(game.withdrawPile.length).toEqual(130);
     });
 });

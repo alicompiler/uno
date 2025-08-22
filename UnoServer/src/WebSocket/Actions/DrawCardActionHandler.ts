@@ -5,7 +5,7 @@ import {
     ItsNotYourTurnErrorCode,
     PlayerNotFoundErrorCode,
 } from '../../Domain/Errors/ErrorCodes';
-import { withdrewCard } from '../../Domain/Game/Game';
+import { withdrawCard } from '../../Domain/Game/Game';
 import { GameStatusEvent } from '../Events/GameStatusEvent';
 import { WebSocket } from 'ws';
 import { createErrorResponse } from '../Response/ErrorResponse';
@@ -53,7 +53,7 @@ export class DrawCardActionHandler implements WsActionHandler {
             return;
         }
 
-        const { game: updatedGame } = withdrewCard(game);
+        const { game: updatedGame } = withdrawCard(game);
         gameRepository.update(updatedGame);
 
         const gameStatusEvent = new GameStatusEvent();

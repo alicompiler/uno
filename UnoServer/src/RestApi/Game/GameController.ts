@@ -119,7 +119,7 @@ export const addGamesApi = (restApi: ExpressInstance) => {
         res.status(200).json(
             gamesRepository.getAll().map((g) => {
                 g.discardPile = [];
-                g.withdrewPile = [];
+                g.withdrawPile = [];
                 return g;
             })
         );
