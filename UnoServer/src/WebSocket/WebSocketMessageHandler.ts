@@ -2,7 +2,7 @@ import { DrawCardActionHandler } from './Actions/DrawCardActionHandler';
 import { PlayCardActionHandler } from './Actions/PlayCardActionHandler';
 import { SkipNoCardActionHandler } from './Actions/SkipNoCardActionHandler';
 import { StartGameActionHandler } from './Actions/StartGameActionHandler';
-import { MessageType, IncomingMessage } from './Message/IncomingMessage';
+import { MessageType, IncomingMessage } from './Message/Incoming/IncomingMessage';
 import { WebSocket } from 'ws';
 
 export const handleWebSocketMessage = (data: string, gameId: string, playerId: string, ws: WebSocket) => {

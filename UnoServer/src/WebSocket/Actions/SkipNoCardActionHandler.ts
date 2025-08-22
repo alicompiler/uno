@@ -6,9 +6,9 @@ import {
     PlayerNotFoundErrorCode,
 } from '../../Domain/Errors/ErrorCodes';
 import { skipNoCard } from '../../Domain/Game/Game';
-import { GameStatusEvent } from '../Events/GameStatusEvent';
+import { GameStateEvent } from '../Events/GameStateEvent';
 import { WebSocket } from 'ws';
-import { createErrorResponse } from '../Response/ErrorResponse';
+import { createErrorResponse } from '../Message/Outgoing/ErrorMessagePayload';
 import { WsActionHandler } from './ActionHandler';
 
 const sp = getServiceProvider();
@@ -56,7 +56,7 @@ export class SkipNoCardActionHandler implements WsActionHandler {
         const { game: updatedGame } = skipNoCard(game);
         gameRepository.update(updatedGame);
 
-        const gameStatusEvent = new GameStatusEvent();
+        const gameStatusEvent = new GameStateEvent();
         gameStatusEvent.send(updatedGame);
     }
 }

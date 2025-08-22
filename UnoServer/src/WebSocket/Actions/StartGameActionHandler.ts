@@ -1,13 +1,13 @@
 import { WebSocket } from 'ws';
 import { WsActionHandler } from './ActionHandler';
 import { getServiceProvider } from '../../Core/ServiceProvider';
-import { createErrorResponse } from '../Response/ErrorResponse';
+import { createErrorResponse } from '../Message/Outgoing/ErrorMessagePayload';
 import {
     GameNotFoundErrorCode,
     PlayerNotAdminErrorCode,
     PlayerNotFoundErrorCode,
 } from '../../Domain/Errors/ErrorCodes';
-import { GameStatusEvent } from '../Events/GameStatusEvent';
+import { GameStateEvent } from '../Events/GameStateEvent';
 import { startGame } from '../../Domain/Game/Game';
 
 const sp = getServiceProvider();
@@ -48,7 +48,7 @@ export class StartGameActionHandler implements WsActionHandler {
 
         startGame(game);
 
-        const gameStatusEvent = new GameStatusEvent();
+        const gameStatusEvent = new GameStateEvent();
         gameStatusEvent.send(game);
     }
 }

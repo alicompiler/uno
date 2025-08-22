@@ -2,7 +2,7 @@ import { WebSocket } from 'ws';
 import { IncomingMessage } from 'http';
 import { registerConnection } from './Connections';
 import { getServiceProvider } from '../Core/ServiceProvider';
-import { GameStatusEvent } from './Events/GameStatusEvent';
+import { GameStateEvent } from './Events/GameStateEvent';
 import { handleWebSocketMessage } from './WebSocketMessageHandler';
 
 const serviceProvider = getServiceProvider();
@@ -36,6 +36,6 @@ export const createWebSocketConnectionHandler = (ws: WebSocket, req: IncomingMes
 
     ws.on('close', () => {});
 
-    const gameStatusEvent = new GameStatusEvent();
+    const gameStatusEvent = new GameStateEvent();
     gameStatusEvent.send(game);
 };

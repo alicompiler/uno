@@ -1,9 +1,8 @@
-import { Card, CardColor } from '../../Domain/Card/Card';
-import { Game, GameDirection } from '../../Domain/Game/Game';
+import { Card, CardColor } from '../../../Domain/Card/Card';
+import { Game, GameDirection } from '../../../Domain/Game/Game';
+import { buildOutgoingMessage, OutgoingMessageType } from './OutgoingMessage';
 
-import { buildOutgoingMessage, OutgoingMessageType } from './BaseResponse';
-
-export interface GameStatus {
+export interface GameState {
     id: string;
 
     players: { id: string; name: string; isAdmin: boolean; cards: Card[] }[];
@@ -20,7 +19,7 @@ export interface GameStatus {
     finished: boolean;
 }
 
-function buildGameStatus(game: Game, playerId: string): GameStatus {
+function buildGameState(game: Game, playerId: string): GameState {
     const topCard = game.discardPile.length > 0 ? game.discardPile[game.discardPile.length - 1] : undefined;
     const activePlayer = game.players[game.activePlayerIndex];
     const me = game.players.find((g) => g.id === playerId);
@@ -45,6 +44,6 @@ function buildGameStatus(game: Game, playerId: string): GameStatus {
 export function createGameStatusResponse(game: Game, userId: string): string {
     return buildOutgoingMessage({
         type: OutgoingMessageType.GameStatus,
-        payload: buildGameStatus(game, userId),
+        payload: buildGameState(game, userId),
     });
 }

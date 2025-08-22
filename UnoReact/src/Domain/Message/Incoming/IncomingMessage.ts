@@ -3,7 +3,7 @@ import type { GameStatus } from './GameStatusMessagePayload';
 
 export enum IncomingMessageType {
     Error = 'error',
-    GameStatus = 'game-status',
+    GameStatus = 'game-state',
 }
 
 export type IncomingMessage =

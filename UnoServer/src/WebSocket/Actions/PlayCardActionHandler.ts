@@ -1,7 +1,7 @@
 import { WebSocket } from 'ws';
 import { WsActionHandler } from './ActionHandler';
-import { IncomingMessage } from '../Message/IncomingMessage';
-import { createErrorResponse } from '../Response/ErrorResponse';
+import { IncomingMessage } from '../Message/Incoming/IncomingMessage';
+import { createErrorResponse } from '../Message/Outgoing/ErrorMessagePayload';
 import {
     CardNotFoundErrorCode,
     GameNotFoundErrorCode,
@@ -12,7 +12,7 @@ import {
 } from '../../Domain/Errors/ErrorCodes';
 import { getServiceProvider } from '../../Core/ServiceProvider';
 import { canPlayCard, playCard } from '../../Domain/Game/Game';
-import { GameStatusEvent } from '../Events/GameStatusEvent';
+import { GameStateEvent } from '../Events/GameStateEvent';
 import { CardColor, cardColors } from '../../Domain/Card/Card';
 
 const sp = getServiceProvider();
@@ -73,7 +73,7 @@ export class PlayCardActionHandler implements WsActionHandler {
         const { game: updatedGame } = playCard(game, card, message.payload.extraPayload);
         gameRepository.update(updatedGame);
 
-        const gameStatusEvent = new GameStatusEvent();
+        const gameStatusEvent = new GameStateEvent();
         gameStatusEvent.send(updatedGame);
     }
 }
