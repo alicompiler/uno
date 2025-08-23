@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest",
+    "test:cov": "vitest --coverage",
     "start": "npx ts-node server.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
@@ -28,6 +29,7 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
+    "@vitest/coverage-v8": "^3.2.4",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",

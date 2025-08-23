@@ -11,8 +11,20 @@ export const buildMockGame = (): Game => {
         finished: false,
         hasStarted: true,
         players: [
-            { id: 'p1', cards: [{ id: 'abc', isWild: true, behaviors: [] }], isAdmin: false, name: 'Player 1' },
-            { id: 'p2', cards: [{ id: 'abc', isWild: true, behaviors: [] }], isAdmin: false, name: 'Player 2' },
+            {
+                id: 'p1',
+                cards: [{ id: 'abc', isWild: true, behaviors: [] }],
+                isAdmin: false,
+                name: 'Player 1',
+                isConnected: true,
+            },
+            {
+                id: 'p2',
+                cards: [{ id: 'abc', isWild: true, behaviors: [] }],
+                isAdmin: false,
+                name: 'Player 2',
+                isConnected: true,
+            },
         ],
         withdrawPile: [{ id: 'test-card', isWild: true, behaviors: [] }],
     };
