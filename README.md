@@ -4,6 +4,14 @@ online game with multiple players, it has different versions of the [UnoGame](ht
 
 players can create a game and invites others, or can join a game.
 
+## Start The Game
+
+in the root directory run the following command:
+
+```bash
+./start-game.sh
+```
+
 ## Features
 
 - Create Game

@@ -1,1 +1,0 @@
-- add github details and creator details in the footer of the home page.
