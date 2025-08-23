@@ -1,11 +1,12 @@
 import { Card, CardColor } from '../../../Domain/Card/Card';
 import { Game, GameDirection } from '../../../Domain/Game/Game';
+import { Player } from '../../../Domain/Player/Player';
 import { buildOutgoingMessage, OutgoingMessageType } from './OutgoingMessage';
 
 export interface GameState {
     id: string;
 
-    players: { id: string; name: string; isAdmin: boolean; cards: Card[] }[];
+    players: Player[];
     topCard?: Card;
     withdrawPileCount: number;
     direction: GameDirection;
@@ -25,7 +26,7 @@ function buildGameState(game: Game, playerId: string): GameState {
     const me = game.players.find((g) => g.id === playerId);
     return {
         id: game.id,
-        players: [...game.players],
+        players: game.players.map((p) => ({ ...p, cards: [] })),
         topCard,
         withdrawPileCount: game.withdrawPile.length,
         direction: game.direction,

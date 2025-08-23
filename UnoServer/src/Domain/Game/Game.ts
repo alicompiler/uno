@@ -166,3 +166,10 @@ export const startGame = (game: Game) => {
 
     game.hasStarted = true;
 };
+
+export const updatePlayerConnectionStatus = (game: Game, playerId: string, isConnected: boolean): void => {
+    const player = game.players.find((p) => p.id === playerId);
+    if (player) {
+        player.isConnected = isConnected;
+    }
+};

@@ -15,7 +15,7 @@ export const GameNotStarted: React.FC = () => {
                 <ul>
                     {players.map((p, i) => (
                         <li key={p.id} className={`text-md p-2 ${i % 2 == 0 ? 'bg-gray-500' : 'bg-gray-800'}`}>
-                            {p.name} {p.isAdmin ? ' (Admin)' : ''}
+                            {p.name} {p.isAdmin ? ' (Admin)' : ''} {p.isConnected ? '' : '[Disconnected]'}
                         </li>
                     ))}
                 </ul>
