@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1755984376082" clover="3.2.0">
-  <project timestamp="1755984376082" name="All files">
-    <metrics statements="963" coveredstatements="427" conditionals="109" coveredconditionals="103" methods="62" coveredmethods="50" elements="1134" coveredelements="580" complexity="0" loc="963" ncloc="963" packages="18" files="44" classes="44"/>
+<coverage generated="1755984567212" clover="3.2.0">
+  <project timestamp="1755984567212" name="All files">
+    <metrics statements="953" coveredstatements="390" conditionals="104" coveredconditionals="97" methods="62" coveredmethods="49" elements="1119" coveredelements="536" complexity="0" loc="953" ncloc="953" packages="17" files="45" classes="45"/>
     <package name="UnoServer">
-      <metrics statements="18" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <metrics statements="49" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="3" coveredmethods="0"/>
+      <file name="eslint.config.js" path="/Users/ali/Desktop/workspace/hudhud/uno/UnoServer/eslint.config.js">
+        <metrics statements="20" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+      </file>
       <file name="server.ts" path="/Users/ali/Desktop/workspace/hudhud/uno/UnoServer/server.ts">
         <metrics statements="18" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="0" type="cond" truecount="0" falsecount="1"/>
@@ -24,6 +47,20 @@
         <line num="23" count="0" type="stmt"/>
         <line num="24" count="0" type="stmt"/>
         <line num="25" count="0" type="stmt"/>
+      </file>
+      <file name="vitest.config.ts" path="/Users/ali/Desktop/workspace/hudhud/uno/UnoServer/vitest.config.ts">
+        <metrics statements="11" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
       </file>
     </package>
     <package name="UnoServer.src.Core">
@@ -65,7 +102,7 @@
       </file>
     </package>
     <package name="UnoServer.src.Domain.Card.Behaviors">
-      <metrics statements="104" coveredstatements="83" conditionals="15" coveredconditionals="14" methods="12" coveredmethods="9"/>
+      <metrics statements="104" coveredstatements="85" conditionals="16" coveredconditionals="15" methods="12" coveredmethods="10"/>
       <file name="ChangeColorBehavior.ts" path="/Users/ali/Desktop/workspace/hudhud/uno/UnoServer/src/Domain/Card/Behaviors/ChangeColorBehavior.ts">
         <metrics statements="11" coveredstatements="11" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="10" count="1" type="stmt"/>
@@ -96,15 +133,15 @@
         <line num="18" count="1" type="stmt"/>
       </file>
       <file name="NextPlayerBehavior.ts" path="/Users/ali/Desktop/workspace/hudhud/uno/UnoServer/src/Domain/Card/Behaviors/NextPlayerBehavior.ts">
-        <metrics statements="9" coveredstatements="7" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="1"/>
+        <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="6" count="2" type="stmt"/>
         <line num="7" count="2" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
+        <line num="9" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
       </file>
       <file name="ReverseBehavior.ts" path="/Users/ali/Desktop/workspace/hudhud/uno/UnoServer/src/Domain/Card/Behaviors/ReverseBehavior.ts">
@@ -652,53 +689,6 @@
         <line num="125" count="0" type="stmt"/>
         <line num="126" count="0" type="stmt"/>
         <line num="127" count="0" type="stmt"/>
-      </file>
-    </package>
-    <package name="UnoServer.src.TestUtils">
-      <metrics statements="41" coveredstatements="39" conditionals="8" coveredconditionals="7" methods="2" coveredmethods="2"/>
-      <file name="GameMocks.ts" path="/Users/ali/Desktop/workspace/hudhud/uno/UnoServer/src/TestUtils/GameMocks.ts">
-        <metrics statements="41" coveredstatements="39" conditionals="8" coveredconditionals="7" methods="2" coveredmethods="2"/>
-        <line num="3" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="4" count="29" type="stmt"/>
-        <line num="5" count="29" type="stmt"/>
-        <line num="6" count="29" type="stmt"/>
-        <line num="7" count="29" type="stmt"/>
-        <line num="8" count="29" type="stmt"/>
-        <line num="9" count="29" type="stmt"/>
-        <line num="10" count="29" type="stmt"/>
-        <line num="11" count="29" type="stmt"/>
-        <line num="12" count="29" type="stmt"/>
-        <line num="13" count="29" type="stmt"/>
-        <line num="14" count="29" type="stmt"/>
-        <line num="15" count="29" type="stmt"/>
-        <line num="16" count="29" type="stmt"/>
-        <line num="17" count="29" type="stmt"/>
-        <line num="18" count="29" type="stmt"/>
-        <line num="19" count="29" type="stmt"/>
-        <line num="20" count="29" type="stmt"/>
-        <line num="21" count="29" type="stmt"/>
-        <line num="22" count="29" type="stmt"/>
-        <line num="23" count="29" type="stmt"/>
-        <line num="24" count="29" type="stmt"/>
-        <line num="25" count="29" type="stmt"/>
-        <line num="26" count="29" type="stmt"/>
-        <line num="27" count="29" type="stmt"/>
-        <line num="28" count="29" type="stmt"/>
-        <line num="29" count="29" type="stmt"/>
-        <line num="30" count="29" type="stmt"/>
-        <line num="31" count="29" type="stmt"/>
-        <line num="33" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="34" count="8" type="stmt"/>
-        <line num="36" count="8" type="cond" truecount="2" falsecount="0"/>
-        <line num="37" count="72" type="cond" truecount="2" falsecount="0"/>
-        <line num="38" count="52" type="stmt"/>
-        <line num="39" count="72" type="cond" truecount="1" falsecount="0"/>
-        <line num="40" count="20" type="stmt"/>
-        <line num="41" count="20" type="cond" truecount="0" falsecount="1"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="44" count="8" type="stmt"/>
-        <line num="45" count="8" type="stmt"/>
       </file>
     </package>
     <package name="UnoServer.src.WebSocket">
