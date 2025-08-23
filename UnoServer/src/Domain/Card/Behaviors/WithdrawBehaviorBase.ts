@@ -1,9 +1,9 @@
 import { createWithdrawEvent, Event } from '../../Event/Event';
-import { Game, getNextPlayerIndex } from '../../Game/Game';
+import { Game } from '../../Game/Game';
 import { Card } from '../Card';
 import { CardBehavior } from '../CardBehavior';
 
-export class WithdrawBehavior implements CardBehavior {
+export abstract class WithdrawBehaviorBase implements CardBehavior {
     private readonly count: number;
 
     constructor(count: number) {
@@ -13,17 +13,19 @@ export class WithdrawBehavior implements CardBehavior {
     execute(game: Game): { game: Game; events: Event[] } {
         const newGame = { ...game };
 
-        const count = newGame.withdrawPile.length < this.count ? newGame.withdrawPile.length : this.count;
+        const drawCounts = newGame.withdrawPile.length < this.count ? newGame.withdrawPile.length : this.count;
         const withdrawnCards: Card[] = [];
-        for (let i = 1; i <= count; i++) {
+        for (let i = 1; i <= drawCounts; i++) {
             withdrawnCards.push(newGame.withdrawPile.pop()!);
         }
-        const nextPlayer = game.players[getNextPlayerIndex(game, 1)];
+        const nextPlayer = game.players[this.getPlayerIndex(game)];
         nextPlayer.cards.push(...withdrawnCards);
 
         return {
             game: newGame,
-            events: [createWithdrawEvent(nextPlayer.id, count)],
+            events: [createWithdrawEvent(nextPlayer.id, drawCounts)],
         };
     }
+
+    protected abstract getPlayerIndex(game: Game): number;
 }

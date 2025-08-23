@@ -79,27 +79,26 @@ export const Table: React.FC<TableProps> = ({ meId, gameState }) => {
             <div className="absolute -left-10 top-1/5 h-2/3 flex flex-col items-center justify-around">
                 {left.map((p) => (
                     <div key={p.id} className="rotate-270">
-                        <TablePlayer id={p.id} name={p.name} isActive={p.id === gameState.activePlayer.id} />
+                        <TablePlayer player={p} isActive={p.id === gameState.activePlayer.id} />
                     </div>
                 ))}
             </div>
             <div className="absolute -right-10 top-1/5 h-2/3 flex flex-col items-center justify-around">
                 {right.map((p) => (
                     <div key={p.id} className="rotate-270">
-                        <TablePlayer id={p.id} name={p.name} isActive={p.id === gameState.activePlayer.id} />
+                        <TablePlayer player={p} isActive={p.id === gameState.activePlayer.id} />
                     </div>
                 ))}
             </div>
             <div className="absolute right-0 -left-0 -top-10 w-full flex items-center justify-center">
                 {top.map((p) => (
-                    <TablePlayer key={p.id} id={p.id} name={p.name} isActive={p.id === gameState.activePlayer.id} />
+                    <TablePlayer key={p.id} player={p} isActive={p.id === gameState.activePlayer.id} />
                 ))}
             </div>
             <div className="absolute right-0 left-0 -bottom-10 w-full flex items-center justify-center">
                 {arrangedPlayers[0] && (
                     <TablePlayer
-                        id={arrangedPlayers[0].id}
-                        name={arrangedPlayers[0].name}
+                        player={arrangedPlayers[0]}
                         isActive={arrangedPlayers[0].id === gameState.activePlayer.id}
                     />
                 )}

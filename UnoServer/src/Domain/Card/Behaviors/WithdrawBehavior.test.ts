@@ -1,6 +1,6 @@
 import { assertNotChanged, buildMockGame } from '../../../TestUtils/GameMocks';
 import { EventType } from '../../Event/Event';
-import { WithdrawBehavior } from './WithdrawBehavior';
+import { WithdrawBehavior } from './WithdrawBehaviorBase';
 
 describe('WithdrawBehavior', () => {
     it('should withdraw cards', () => {

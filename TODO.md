@@ -9,8 +9,8 @@
 - disable start for non admins [done]
 - handle close connection [done]
 - timer
-- move to next player if active player is disconnected
-- leave game before starting the game (filter disconnected players)
+- move to next player if active player is disconnected [later]
+- leave game before starting the game (filter disconnected players) [later]
 - game cleanup [done]
 - handle connections: don't accept connection after game started or finished [done]
 

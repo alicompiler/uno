@@ -15,11 +15,13 @@ export const GameInfoBar: React.FC = () => {
     }, []);
 
     useEffect(() => {
+        setTime(0);
         const intervalId = setInterval(() => {
-            setTime((t) => (t + 1) % 60);
+            // 30 must come from game settings
+            setTime((t) => (t + 1) % 30);
         }, 1000);
         return () => clearInterval(intervalId);
-    }, []);
+    }, [gamePlay.gameState?.activePlayer]);
 
     const gameState = gamePlay.gameState!;
     const activePlayer = gameState.activePlayer;
