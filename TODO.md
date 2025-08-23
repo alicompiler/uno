@@ -7,10 +7,12 @@
 - invite [done]
 - ui events [done]
 - disable start for non admins [done]
-- handle close connection
+- handle close connection [done]
 - timer
-- game cleanup
-- handle connections: don't accept connection after game started or finished
+- move to next player if active player is disconnected
+- leave game before starting the game (filter disconnected players)
+- game cleanup [done]
+- handle connections: don't accept connection after game started or finished [done]
 
 - how clients should communicate with the servers?
 - do we need authorization?
