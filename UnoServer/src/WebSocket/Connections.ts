@@ -26,6 +26,13 @@ export const registerConnection = (gameId: string, playerId: string, ws: WebSock
     playerConnections[gameId] = ws;
 };
 
+export const unregisterConnection = (gameId: string, playerId: string) => {
+    const playerConnections = connections[playerId];
+    if (playerConnections) {
+        delete playerConnections[gameId];
+    }
+};
+
 export const getConnectionsForGame = (gameId: string, playersId: string[]): Record<string, WebSocket> => {
     return playersId.reduce(
         (acc, pId) => {

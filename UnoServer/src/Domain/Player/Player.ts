@@ -5,4 +5,5 @@ export interface Player {
     name: string;
     cards: Card[];
     isAdmin: boolean;
+    isConnected: boolean;
 }

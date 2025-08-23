@@ -44,6 +44,7 @@ const createGameApi = (req: Request, res: Response) => {
         name: payload.creator.name,
         cards: [],
         isAdmin: true,
+        isConnected: false,
     });
 
     try {
@@ -104,6 +105,7 @@ const joinGameApi = (req: Request, res: Response) => {
         name: payload.name,
         cards: [],
         isAdmin: false,
+        isConnected: false,
     });
 
     res.status(201).send();
