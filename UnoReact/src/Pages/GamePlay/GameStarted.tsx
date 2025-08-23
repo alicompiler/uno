@@ -25,27 +25,31 @@ export const GameStarted: React.FC = () => {
 
     return (
         <>
-            <div className="p-4 w-full">
-                <GameInfoBar />
-            </div>
-            <div className="flex-1">
+            {gamePlay.winner ? null : (
+                <div className="p-4 w-full">
+                    <GameInfoBar />
+                </div>
+            )}
+            <div className="flex-1 w-full flex items-center justify-center">
                 <Table gameState={gameState} meId={myId} />
             </div>
-            <div>
-                <HandOfCards
-                    cards={gameState.myCards}
-                    onDiscardCard={(c) => {
-                        if (c.isWild) {
-                            setIsColorModalOpen(true);
-                            setSelectedCard(c);
-                        } else {
-                            playCard(c.id, {});
-                        }
-                    }}
-                />
+            <div className="w-full flex items-center justify-center">
+                {gamePlay.winner ? (
+                    <GameResult winner={gamePlay.winner} />
+                ) : (
+                    <HandOfCards
+                        cards={gameState.myCards}
+                        onDiscardCard={(c) => {
+                            if (c.isWild) {
+                                setIsColorModalOpen(true);
+                                setSelectedCard(c);
+                            } else {
+                                playCard(c.id, {});
+                            }
+                        }}
+                    />
+                )}
             </div>
-
-            <GameResult gameState={gameState} />
 
             {isColorModalOpen ? (
                 <ChooseColorModal

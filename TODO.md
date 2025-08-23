@@ -10,3 +10,4 @@
 - timer
 - game cleanup
 - ui events
+- handle connections: don't accept connection after game started or finished

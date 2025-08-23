@@ -15,7 +15,7 @@ export const GamePlayContainer: React.FC = () => {
     }
 
     return (
-        <div className="flex items-center justify-center h-full flex-col gap-8">
+        <div className="flex items-center justify-center h-full flex-col gap-8 w-full">
             {gamePlay.gameState?.hasStarted ? <GameStarted /> : <GameNotStarted />}
         </div>
     );

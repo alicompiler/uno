@@ -116,7 +116,7 @@ function resetWithdrawPileIfEmpty(game: Game): Event[] {
             .map(({ value }) => value);
         game.discardPile = [topCard!];
 
-        return [{ type: EventType.WithdrawPileReset, payload: {} }];
+        return [{ type: EventType.WithdrawPileReset }];
     }
     return [];
 }

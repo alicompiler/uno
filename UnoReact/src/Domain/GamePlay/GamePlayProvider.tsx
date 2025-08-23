@@ -1,8 +1,8 @@
 import { useCallback, useState, type PropsWithChildren } from 'react';
-import { GamePlayContext } from './GamePlayContext';
+import { GamePlayContext, type GamePlayContextType } from './GamePlayContext';
 import { WebsocketProvider } from '../Websocket/WebsocketProvider';
 import type { GameStatus } from '../Message/Incoming/GameStatusMessagePayload';
-import { IncomingMessageType, type IncomingMessage } from '../Message/Incoming/IncomingMessage';
+import { EventType, IncomingMessageType, type IncomingMessage } from '../Message/Incoming/IncomingMessage';
 
 interface Props extends PropsWithChildren {
     gameId: string;
@@ -10,6 +10,7 @@ interface Props extends PropsWithChildren {
 
 export const GamePlayProvider: React.FC<Props> = ({ gameId, children }) => {
     const [gameStatus, setGameStatus] = useState<GameStatus | null>(null);
+    const [winner, setWinner] = useState<GamePlayContextType['winner']>(undefined);
 
     const handleMessage = useCallback((message: IncomingMessage) => {
         switch (message.type) {
@@ -18,6 +19,12 @@ export const GamePlayProvider: React.FC<Props> = ({ gameId, children }) => {
                 break;
             case IncomingMessageType.Error:
                 console.log('error', message.payload);
+                break;
+            case IncomingMessageType.Event:
+                const finishedEvent = message.payload.find((e) => e.type === EventType.GameFinished);
+                if (finishedEvent) {
+                    setWinner(finishedEvent.payload.winner);
+                }
                 break;
         }
     }, []);
@@ -28,6 +35,7 @@ export const GamePlayProvider: React.FC<Props> = ({ gameId, children }) => {
                 value={{
                     gameState: gameStatus,
                     gameId: gameId,
+                    winner: winner,
                 }}
             >
                 {children}

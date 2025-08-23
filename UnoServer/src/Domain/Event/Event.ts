@@ -14,7 +14,7 @@ export type Event =
       }
     | {
           type: EventType.WithdrawPileReset;
-          payload: never;
+          payload?: never;
       }
     | {
           type: EventType.GameFinished;
