@@ -5,9 +5,18 @@
 
 - winner [done]
 - invite [done]
+- ui events [done]
+- disable start for non admins [done]
 - handle close connection
-- disable start for non admins
 - timer
 - game cleanup
-- ui events
 - handle connections: don't accept connection after game started or finished
+
+- how clients should communicate with the servers?
+- do we need authorization?
+- write detailed algorithm for the game.
+- how can cards have multiple behaviors?
+- how make the game easily extensible?
+- what is the lifecycle of the room? when it should die?
+- where to store game data?
+- what about custom card designing?
