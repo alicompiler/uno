@@ -24,6 +24,22 @@ export const GameNotStarted: React.FC = () => {
             <Button disabled={players.length < 2} size="lg" onClick={() => startGame()}>
                 Start
             </Button>
+
+            <Button
+                size="lg"
+                onClick={() => {
+                    const host = window.location.host;
+                    const protocol = window.location.protocol;
+                    const inviteUrl = `${protocol}${host}/join-game?gameId=${gamePlay.gameId}`;
+                    if (window.navigator) {
+                        navigator.clipboard.writeText(inviteUrl).catch(() => {
+                            alert('Failed to copy url to the clipboard');
+                        });
+                    }
+                }}
+            >
+                Invite
+            </Button>
         </div>
     );
 };
