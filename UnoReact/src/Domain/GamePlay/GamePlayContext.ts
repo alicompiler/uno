@@ -10,6 +10,7 @@ export interface GamePlayContextType {
         name: string;
     };
     events: Event[];
+    currentPlayer: { id: string; name: string; isAdmin: boolean };
 }
 
 export const GamePlayContext = React.createContext<GamePlayContextType | null>(null);

@@ -3,8 +3,8 @@
 - think about different background for the whole app
 - create components (button, text)
 
-- winner
-- invite
+- winner [done]
+- invite [done]
 - handle close connection
 - disable start for non admins
 - timer

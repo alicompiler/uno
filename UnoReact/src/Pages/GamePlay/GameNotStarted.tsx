@@ -21,7 +21,11 @@ export const GameNotStarted: React.FC = () => {
                 </ul>
             </div>
 
-            <Button disabled={players.length < 2} size="lg" onClick={() => startGame()}>
+            <Button
+                disabled={players.length < 2 || gamePlay?.currentPlayer.isAdmin === false}
+                size="lg"
+                onClick={() => startGame()}
+            >
                 Start
             </Button>
 
