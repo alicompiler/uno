@@ -4,7 +4,7 @@ import { registerConnection, unregisterConnection } from './Connections';
 import { getServiceProvider } from '../Core/ServiceProvider';
 import { GameStateEvent } from './Events/GameStateEvent';
 import { handleWebSocketMessage } from './WebSocketMessageHandler';
-import { updatePlayerConnectionStatus } from '../Domain/Game/Game';
+import { Game, updatePlayerConnectionStatus } from '../Domain/Game/Game';
 
 const serviceProvider = getServiceProvider();
 const gamesRepository = serviceProvider.getGameRepository();
@@ -20,7 +20,7 @@ export const createWebSocketConnectionHandler = (ws: WebSocket, req: IncomingMes
     }
 
     const game = gamesRepository.findById(gameId);
-    if (!game) {
+    if (!game || canPlayerJoin(game, playerId) === false) {
         ws.close();
         return;
     }
@@ -43,4 +43,9 @@ export const createWebSocketConnectionHandler = (ws: WebSocket, req: IncomingMes
 
     const gameStatusEvent = new GameStateEvent();
     gameStatusEvent.send(game);
+};
+
+const canPlayerJoin = (game: Game, playerId: string) => {
+    const isPlayerAlreadyExist = game.players.some((p) => p.id === playerId);
+    return game.finished === false && (game.hasStarted === false || (game.hasStarted && isPlayerAlreadyExist));
 };

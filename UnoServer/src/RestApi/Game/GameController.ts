@@ -90,9 +90,7 @@ const joinGameApi = (req: Request, res: Response) => {
     }
 
     if (game.players.some((p) => p.id === payload.userId)) {
-        return res.status(409).json({
-            message: 'already joined',
-        });
+        return res.status(201).send();
     }
 
     const MAX_PLAYERS_COUNT = 10;
