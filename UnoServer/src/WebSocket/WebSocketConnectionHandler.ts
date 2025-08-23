@@ -20,7 +20,6 @@ export const createWebSocketConnectionHandler = (ws: WebSocket, req: IncomingMes
     }
 
     const game = gamesRepository.findById(gameId);
-
     if (!game || canPlayerJoin(game, playerId) === false) {
         ws.close();
         return;
