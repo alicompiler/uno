@@ -52,7 +52,7 @@ const setPlayerTimeout = (gameId: string) => {
 
     timerId = setTimeout(() => {
         const game = gameRepository.findById(gameId);
-        if (!game) {
+        if (!game || game.finished) {
             return;
         }
 
