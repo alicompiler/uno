@@ -147,6 +147,7 @@ export const startGame = (game: Game) => {
         .sort((a, b) => a.sort - b.sort)
         .map(({ value }) => value);
 
+    // make 7 in the game settings
     const numberOfCardsForEachPlayer = 7;
     game.players.forEach((p) => {
         const cards: Card[] = [];
