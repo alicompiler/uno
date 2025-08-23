@@ -1,5 +1,7 @@
-export const GameNotFoundErrorCode = 'GAME-101';
 export const DuplicateGameErrorCode = 'GAME-100';
+export const GameNotFoundErrorCode = 'GAME-101';
+export const GameNotStartedStartedErrorCode = 'GAME-102';
+export const GameFinishedErrorCode = 'GAME-103';
 export const PlayerNotFoundErrorCode = 'PLAYER-100';
 export const PlayerNotAdminErrorCode = 'PLAYER-101';
 export const ItsNotYourTurnErrorCode = 'GAMEPLAY-100';

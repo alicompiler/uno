@@ -7,6 +7,7 @@ import { IncomingMessageType, type IncomingMessage } from '../Message/Incoming/I
 interface Props extends PropsWithChildren {
     gameId: string;
 }
+
 export const GamePlayProvider: React.FC<Props> = ({ gameId, children }) => {
     const [gameStatus, setGameStatus] = useState<GameStatus | null>(null);
 

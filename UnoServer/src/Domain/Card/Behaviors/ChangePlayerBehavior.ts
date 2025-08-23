@@ -5,18 +5,14 @@ import { CardBehavior } from '../CardBehavior';
 export abstract class ChangePlayerBehavior implements CardBehavior {
     execute(game: Game): { game: Game; events: Event[] } {
         const newGame = { ...game };
-        const events: Event[] = [];
         const newPosition = getNextPlayerIndex(newGame, this.getStep());
-        const nextPlayer = newGame.players[newPosition];
-        events.push(...this.getEvents(nextPlayer.id));
+
         newGame.activePlayerIndex = newPosition;
         return {
             game: newGame,
-            events,
+            events: [],
         };
     }
 
     abstract getStep(): number;
-
-    abstract getEvents(nextPlayerId: string): Event[];
 }

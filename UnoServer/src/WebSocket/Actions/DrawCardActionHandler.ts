@@ -8,14 +8,13 @@ import { BaseActionHandler } from './BaseActionHandler';
 const MAX_DRAW_COUNT = 1;
 
 export class DrawCardActionHandler extends BaseActionHandler {
-    handle(ws: WebSocket, _: IncomingMessage, game: Game): Game | null {
+    handle(ws: WebSocket, _: IncomingMessage, game: Game) {
         if (game.drawCount >= MAX_DRAW_COUNT) {
             this.sendError(ws, 'exceed draw times', ExceededDrawTimesErrorCode);
             return null;
         }
 
-        const { game: updatedGame } = withdrawCard(game);
-        return updatedGame;
+        return withdrawCard(game);
     }
 
     protected checkTurn(): boolean {

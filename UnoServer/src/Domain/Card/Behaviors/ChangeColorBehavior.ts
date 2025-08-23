@@ -1,4 +1,4 @@
-import { createChangeColorEvent, Event } from '../../Event/Event';
+import { Event } from '../../Event/Event';
 import { Game } from '../../Game/Game';
 import { CardColor } from '../Card';
 import { CardBehavior } from '../CardBehavior';
@@ -10,18 +10,13 @@ interface ChangeColorPayload {
 export class ChangeColorBehavior implements CardBehavior {
     execute(game: Game, payload: unknown): { game: Game; events: Event[] } {
         const newGame = { ...game };
-        const events: Event[] = [];
         const p = payload as ChangeColorPayload;
 
         newGame.color = p.color;
 
-        if (game.color != p.color) {
-            events.push(createChangeColorEvent(p.color));
-        }
-
         return {
             game: newGame,
-            events,
+            events: [],
         };
     }
 }

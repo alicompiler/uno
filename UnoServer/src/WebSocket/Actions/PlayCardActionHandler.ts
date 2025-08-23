@@ -11,7 +11,7 @@ import { IncomingMessage } from '../Message/Incoming/IncomingMessage';
 import { BaseActionHandler } from './BaseActionHandler';
 
 export class PlayCardActionHandler extends BaseActionHandler {
-    handle(ws: WebSocket, message: IncomingMessage, game: Game, player: Player): Game | null {
+    handle(ws: WebSocket, message: IncomingMessage, game: Game, player: Player) {
         const card = player.cards.find((c) => c.id === message.payload.cardId);
         if (!card) {
             this.sendError(ws, 'cannot find the card', CardNotFoundErrorCode);
@@ -32,8 +32,7 @@ export class PlayCardActionHandler extends BaseActionHandler {
         }
 
         // TODO: validate extra payload
-        const { game: updatedGame } = playCard(game, card, message.payload.extraPayload);
-        return updatedGame;
+        return playCard(game, card, message.payload.extraPayload);
     }
 
     protected checkTurn(): boolean {

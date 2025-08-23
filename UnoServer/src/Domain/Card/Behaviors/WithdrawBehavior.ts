@@ -11,7 +11,6 @@ export class WithdrawBehavior implements CardBehavior {
     }
 
     execute(game: Game): { game: Game; events: Event[] } {
-        const events: Event[] = [];
         const newGame = { ...game };
 
         const count = newGame.withdrawPile.length < this.count ? newGame.withdrawPile.length : this.count;
@@ -21,11 +20,10 @@ export class WithdrawBehavior implements CardBehavior {
         }
         const nextPlayer = game.players[getNextPlayerIndex(game, 1)];
         nextPlayer.cards.push(...withdrawnCards);
-        events.push(createWithdrawEvent(nextPlayer.id, count));
 
         return {
             game: newGame,
-            events,
+            events: [createWithdrawEvent(nextPlayer.id, count)],
         };
     }
 }

@@ -1,13 +1,14 @@
 import type React from 'react';
-import { GameInfoBar } from './GameInfoBar';
-import { Table } from './Table';
-import { useGamePlay } from '../../Domain/GamePlay/UseGamePlay';
 import { useEffect, useState } from 'react';
-import { getProfile } from '../../Domain/Profile/Profile';
-import { HandOfCards } from './HandOfCards';
-import { usePlayCard } from '../../Domain/GamePlay/Actions/UsePlayCard';
-import { ChooseColorModal } from './ChooseColorModal';
 import type { UnoCard } from '../../Domain/Card/UnoCard';
+import { usePlayCard } from '../../Domain/GamePlay/Actions/UsePlayCard';
+import { useGamePlay } from '../../Domain/GamePlay/UseGamePlay';
+import { getProfile } from '../../Domain/Profile/Profile';
+import { ChooseColorModal } from './ChooseColorModal';
+import { GameInfoBar } from './GameInfoBar';
+import { HandOfCards } from './HandOfCards';
+import { Table } from './Table';
+import { GameResult } from './GameResult';
 
 export const GameStarted: React.FC = () => {
     const [isColorModalOpen, setIsColorModalOpen] = useState(false);
@@ -43,6 +44,9 @@ export const GameStarted: React.FC = () => {
                     }}
                 />
             </div>
+
+            <GameResult gameState={gameState} />
+
             {isColorModalOpen ? (
                 <ChooseColorModal
                     onClose={() => setIsColorModalOpen(false)}
