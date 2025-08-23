@@ -19,7 +19,8 @@ export const createWebSocketConnectionHandler = (ws: WebSocket, req: IncomingMes
     }
 
     const game = gamesRepository.findById(gameId);
-    if (!game) {
+
+    if (!game || game.hasStarted || game.finished) {
         ws.close();
         return;
     }
