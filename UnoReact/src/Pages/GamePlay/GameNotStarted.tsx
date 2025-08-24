@@ -8,6 +8,10 @@ export const GameNotStarted: React.FC = () => {
     const players = gamePlay.gameState!.players;
     const startGame = useStartGameAction();
 
+    const host = window.location.host;
+    const protocol = window.location.protocol;
+    const inviteUrl = `${protocol}//${host}/join-game?gameId=${gamePlay.gameId}`;
+
     return (
         <div className="flex gap-4 flex-col">
             <h2 className="text-xl">Joined:</h2>
@@ -29,21 +33,25 @@ export const GameNotStarted: React.FC = () => {
                 Start
             </Button>
 
-            <Button
-                size="lg"
-                onClick={() => {
-                    const host = window.location.host;
-                    const protocol = window.location.protocol;
-                    const inviteUrl = `${protocol}${host}/join-game?gameId=${gamePlay.gameId}`;
-                    if (window.navigator) {
-                        navigator.clipboard.writeText(inviteUrl).catch(() => {
-                            alert('Failed to copy url to the clipboard');
-                        });
-                    }
-                }}
-            >
-                Invite
-            </Button>
+            {window.navigator?.clipboard ? (
+                <Button
+                    size="lg"
+                    onClick={() => {
+                        if (window.navigator && window.navigator.clipboard) {
+                            navigator.clipboard.writeText(inviteUrl).catch(() => {
+                                alert('Failed to copy url to the clipboard');
+                            });
+                        }
+                    }}
+                >
+                    Invite
+                </Button>
+            ) : (
+                <div className="p-2 flex flex-col justify-center items-center gap-4">
+                    <p className="text-lg">Copy the invite url and share it with your friends</p>
+                    <p className="text-lg">{inviteUrl}</p>
+                </div>
+            )}
         </div>
     );
 };
