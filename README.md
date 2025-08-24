@@ -152,7 +152,9 @@ If you’re not sure where to start, feel free to check the issues
 
 ## Next
 
-- Game Settings
+- Better error message
+- Show alert after clicking on the invite button
+- Game settings
 - Leave game (before starting the game)
 - Kick player (by admin)
 - Set player as an admin (by admin)
