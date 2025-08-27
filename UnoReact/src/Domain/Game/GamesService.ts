@@ -1,4 +1,4 @@
-const baseUrl = `http://${window.location.hostname}`;
+const baseUrl = `http://${window.location.hostname}:3000`;
 import Axios from 'axios';
 import type { GameStatus } from '../Message/Incoming/GameStatusMessagePayload';
 
