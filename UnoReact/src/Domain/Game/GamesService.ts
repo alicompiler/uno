@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'http://stacktrace.uno';
 import Axios from 'axios';
 import type { GameStatus } from '../Message/Incoming/GameStatusMessagePayload';
 
