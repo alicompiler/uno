@@ -39,6 +39,10 @@ export const createWebSocketConnectionHandler = (ws: WebSocket, req: IncomingMes
         updatePlayerConnectionStatus(game, playerId, false);
         const gameStatusEvent = new GameStateEvent();
         gameStatusEvent.send(game);
+
+        if (game.players.every((p) => p.isConnected === false)) {
+            gamesRepository.removeById(game.id);
+        }
     });
 
     const gameStatusEvent = new GameStateEvent();

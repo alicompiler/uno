@@ -15,4 +15,9 @@ describe('NextPlayerBehavior', () => {
 
         assertNotChanged(game, newGame, ['activePlayerIndex']);
     });
+
+    it('should not return any event', () => {
+        const behavior = new NextPlayerBehavior();
+        expect(behavior.getEvents().length).toEqual(0);
+    });
 });

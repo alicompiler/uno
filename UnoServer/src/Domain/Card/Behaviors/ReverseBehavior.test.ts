@@ -1,5 +1,4 @@
-import { assertNotChanged as assertNotChanged, buildMockGame } from '../../../TestUtils/GameMocks';
-import { EventType } from '../../Event/Event';
+import { assertNotChanged, buildMockGame } from '../../../TestUtils/GameMocks';
 import { ReverseBehavior } from './ReverseBehavior';
 
 describe('ReversePlayerBehavior', () => {
@@ -9,8 +8,7 @@ describe('ReversePlayerBehavior', () => {
         const behavior = new ReverseBehavior();
         const { game: newGame, events } = behavior.execute(game);
         expect(newGame.direction).toEqual('rtl');
-        expect(events.length).toEqual(1);
-        expect(events[0].type).toEqual(EventType.ReversePlayingDirection);
+        expect(events.length).toEqual(0);
         assertNotChanged(game, newGame, ['direction']);
     });
 
@@ -20,8 +18,7 @@ describe('ReversePlayerBehavior', () => {
         const behavior = new ReverseBehavior();
         const { game: newGame, events } = behavior.execute(game);
         expect(newGame.direction).toEqual('ltr');
-        expect(events.length).toEqual(1);
-        expect(events[0].type).toEqual(EventType.ReversePlayingDirection);
+        expect(events.length).toEqual(0);
         assertNotChanged(game, newGame, ['direction']);
     });
 });

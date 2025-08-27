@@ -2,7 +2,15 @@ import { buildMockGame } from '../../TestUtils/GameMocks';
 import { Card, CardColor, cardColors } from '../Card/Card';
 import { CardBehavior } from '../Card/CardBehavior';
 import { EventType } from '../Event/Event';
-import { canPlayCard, Game, getNextPlayerIndex, playCard, skipNoCard, startGame, withdrawCard } from './Game';
+import {
+    canPlayCard,
+    getNextPlayerIndex,
+    playCard,
+    skipNoCard,
+    startGame,
+    updatePlayerConnectionStatus,
+    withdrawCard,
+} from './Game';
 
 describe('Game', () => {
     describe('can play card', () => {
@@ -68,7 +76,15 @@ describe('Game', () => {
             execute(game) {
                 return {
                     game: { ...game, activePlayerIndex: 10 },
-                    events: [{ type: EventType.ChangeColor, payload: 'blue' }],
+                    events: [
+                        {
+                            type: EventType.Withdraw,
+                            payload: {
+                                count: 1,
+                                playerId: 'test',
+                            },
+                        },
+                    ],
                 };
             },
         };
@@ -77,7 +93,7 @@ describe('Game', () => {
             execute(game) {
                 return {
                     game: { ...game, direction: 'rtl' },
-                    events: [{ type: EventType.SkipPlayer, payload: 'Ali' }],
+                    events: [{ type: EventType.WithdrawPileReset }],
                 };
             },
         };
@@ -121,11 +137,11 @@ describe('Game', () => {
             expect(newGame.direction).toEqual('rtl');
             expect(game.direction).toEqual('ltr');
 
-            expect(events[0].type).toEqual(EventType.ChangeColor);
-            expect(events[0].payload).toEqual('blue');
+            expect(events[0].type).toEqual(EventType.Withdraw);
+            expect(events[0].payload).toEqual({ count: 1, playerId: 'test' });
 
-            expect(events[1].type).toEqual(EventType.SkipPlayer);
-            expect(events[1].payload).toEqual('Ali');
+            expect(events[1].type).toEqual(EventType.WithdrawPileReset);
+            expect(events[1].payload).toEqual(undefined);
         });
 
         it('should reset draw count', () => {
@@ -257,7 +273,7 @@ describe('Game', () => {
             expect(newGame.discardPile.length).toEqual(1);
 
             expect(events[1].type).toEqual(EventType.WithdrawPileReset);
-            expect(events[1].payload).toEqual({});
+            expect(events[1].payload).toEqual(undefined);
         });
     });
 
@@ -276,8 +292,8 @@ describe('Game', () => {
         const game = buildMockGame();
         game.players = [
             ...game.players,
-            { id: 'p3', cards: [], isAdmin: false, name: 'Player 3' },
-            { id: 'p4', cards: [], isAdmin: false, name: 'Player 4' },
+            { id: 'p3', cards: [], isAdmin: false, name: 'Player 3', isConnected: true },
+            { id: 'p4', cards: [], isAdmin: false, name: 'Player 4', isConnected: true },
         ];
 
         it('should get next player when active player is in the middle (ltr)', () => {
@@ -396,6 +412,19 @@ describe('Game', () => {
             expect(game.activePlayerIndex).toBeGreaterThan(-1);
             expect(game.color).toEqual('blue');
             expect(game.withdrawPile.length).toEqual(100 - 14 - 1); // total - given to players - top card
+        });
+    });
+
+    describe('update connection status', () => {
+        it('should update connection status', () => {
+            const game = buildMockGame();
+            updatePlayerConnectionStatus(game, 'p1', false);
+            expect(game.players[0].isConnected).toEqual(false);
+            updatePlayerConnectionStatus(game, 'p2', false);
+            expect(game.players[1].isConnected).toEqual(false);
+            updatePlayerConnectionStatus(game, 'p1', true);
+            expect(game.players[0].isConnected).toEqual(true);
+            expect(game.players[1].isConnected).toEqual(false);
         });
     });
 });
