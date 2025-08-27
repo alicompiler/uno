@@ -5,7 +5,9 @@
   "scripts": {
     "test": "vitest",
     "test:cov": "vitest --coverage",
-    "start": "npx ts-node server.ts",
+    "build": "tsc",
+    "start": "npm run build && node dist/server.js",
+    "dev": "npx ts-node server.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },

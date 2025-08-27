@@ -4,9 +4,14 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
         "strict": true,
         "outDir": "dist",
         "skipLibCheck": true,
         "types": ["vitest/globals", "vitest"]
+    },
+    "ts-node": {
+        "esm": false,
+        "experimentalSpecifierResolution": "node"
     }
 }
