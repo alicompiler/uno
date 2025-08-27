@@ -10,6 +10,11 @@
         "skipLibCheck": true,
         "types": ["vitest/globals", "vitest"]
     },
+    "exclude": [
+        "**/*.test.ts",
+        "**/*.testx.ts",
+        "node_modules"
+    ],
     "ts-node": {
         "esm": false,
         "experimentalSpecifierResolution": "node"
