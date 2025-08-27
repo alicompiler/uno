@@ -14,7 +14,7 @@ export const WebsocketProvider: React.FC<Props> = ({ gameId, onMessage, children
 
     useEffect(() => {
         const profile = getProfileOrCreateIfNotExists();
-        ws.current = new WebSocket(`ws://${window.location.hostname}:3001?gameId=${gameId}&playerId=${profile.id}`);
+        ws.current = new WebSocket(`ws://${window.location.hostname}?gameId=${gameId}&playerId=${profile.id}`);
         setConnectionStatus('connecting');
         ws.current.onopen = () => {
             setConnectionStatus('connected');
