@@ -9,7 +9,7 @@ export const GameNotStarted: React.FC = () => {
     const startGame = useStartGameAction();
 
     const host = window.location.host;
-    const protocol = window.location.protocol;
+    const protocol = 'http:';
     const inviteUrl = `${protocol}//${host}/join-game?gameId=${gamePlay.gameId}`;
 
     return (

@@ -1,4 +1,4 @@
-const baseUrl = `${window.location.protocol}//${window.location.hostname}:8080`;
+const baseUrl = `http://${window.location.hostname}:8080`;
 import Axios from 'axios';
 import type { GameStatus } from '../Message/Incoming/GameStatusMessagePayload';
 
