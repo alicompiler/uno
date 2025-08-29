@@ -5,8 +5,8 @@ import { BaseActionHandler } from './BaseActionHandler';
 
 export class StartGameActionHandler extends BaseActionHandler {
     handle(_: WebSocket, __: IncomingMessage, game: Game) {
-        startGame(game);
-        return { game, events: [] };
+        const { game: newGame, events } = startGame(game);
+        return { game: newGame, events: events };
     }
 
     protected allowOnlyAdmins(): boolean {

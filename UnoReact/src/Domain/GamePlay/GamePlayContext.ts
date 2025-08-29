@@ -9,7 +9,7 @@ export interface GamePlayContextType {
         id: string;
         name: string;
     };
-    events: Event[];
+    latestEvents: Event[];
     currentPlayer: { id: string; name: string; isAdmin: boolean };
 }
 

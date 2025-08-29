@@ -5,12 +5,14 @@ import { createGame } from '../../Domain/Game/GamesService';
 import { useNavigate } from 'react-router';
 import { Button } from '../../Components/Button/Button';
 import { TextInput } from '../../Components/TextInput/TextInput';
+import { useSoundEffects } from '../../Domain/SoundEffectProvider/UseSoundEffects';
 
 export const CreateGamePage: React.FC = () => {
     const [profile, setProfile] = useState<Profile | null>(null);
     const [submitting, setSubmitting] = useState(false);
     const [name, setName] = useState('');
     const navigate = useNavigate();
+    const { loadAll } = useSoundEffects();
 
     useEffect(() => {
         const profile = getProfileOrCreateIfNotExists();
@@ -19,6 +21,8 @@ export const CreateGamePage: React.FC = () => {
     }, []);
 
     const onCreateGame = () => {
+        loadAll();
+
         if (name.trim().length === 0 || !profile) {
             alert('Invalid data');
             return;

@@ -5,6 +5,7 @@ import { joinGame } from '../../Domain/Game/GamesService';
 import { useNavigate } from 'react-router';
 import { Button } from '../../Components/Button/Button';
 import { TextInput } from '../../Components/TextInput/TextInput';
+import { useSoundEffects } from '../../Domain/SoundEffectProvider/UseSoundEffects';
 
 export const JoinGamePage: React.FC = () => {
     const [profile, setProfile] = useState<Profile | null>(null);
@@ -13,6 +14,7 @@ export const JoinGamePage: React.FC = () => {
     const gameIdFromParams = new URLSearchParams(window.location.search).get('gameId');
     const [gameId, setGameId] = useState(gameIdFromParams ?? '');
     const navigate = useNavigate();
+    const { loadAll } = useSoundEffects();
 
     useEffect(() => {
         const profile = getProfileOrCreateIfNotExists();
@@ -20,7 +22,9 @@ export const JoinGamePage: React.FC = () => {
         setName(profile.name);
     }, []);
 
-    const onCreateGame = () => {
+    const onJoinGame = () => {
+        loadAll();
+
         if (gameId.trim().length === 0 || name.trim().length === 0 || !profile) {
             alert('Invalid data');
             return;
@@ -53,7 +57,7 @@ export const JoinGamePage: React.FC = () => {
 
                 <TextInput label="Your Name" value={name} onChange={(v) => setName(v)} />
 
-                <Button size="lg" disabled={submitting} onClick={onCreateGame}>
+                <Button size="lg" disabled={submitting} onClick={onJoinGame}>
                     Join Game
                 </Button>
             </form>

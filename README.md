@@ -82,6 +82,19 @@ that being said, there are still few things to be improved to keep the code more
 
 also good set of automated tests for the game logic is added, but we are planning to add tests for everything, it will help us be confident adding new features.
 
+### UI Events
+
+every game can have this set of events:
+
+- Player Joined
+- Player Disconnected
+- Game Started
+- Card Played
+- Skip No Card
+- Cards Withdrawal
+- Withdraw Pile Reset
+- Game Finished
+
 ## Game Lifecycle
 
 1. Game Created
@@ -152,6 +165,12 @@ If you’re not sure where to start, feel free to check the issues
 
 ## Next
 
+- UI should work on screen size
+- cancel playing wild card when the color modal is opened
+- show players cards: low,mid,high
+- Add sound effects
+- Better events/messages when card is played (and active player changed)
+- Reset game action
 - Better error message
 - Show alert after clicking on the invite button
 - Game settings

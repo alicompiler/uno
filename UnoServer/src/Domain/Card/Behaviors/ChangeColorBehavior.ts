@@ -1,4 +1,4 @@
-import { Event } from '../../Event/Event';
+import { Event, EventType } from '../../Event/Event';
 import { Game } from '../../Game/Game';
 import { CardColor } from '../Card';
 import { CardBehavior } from '../CardBehavior';
@@ -16,7 +16,14 @@ export class ChangeColorBehavior implements CardBehavior {
 
         return {
             game: newGame,
-            events: [],
+            events: [
+                {
+                    type: EventType.ColorChanged,
+                    payload: {
+                        newColor: p.color,
+                    },
+                },
+            ],
         };
     }
 }

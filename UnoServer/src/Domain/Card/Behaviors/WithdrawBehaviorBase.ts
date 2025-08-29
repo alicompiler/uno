@@ -1,4 +1,4 @@
-import { createWithdrawEvent, Event } from '../../Event/Event';
+import { Event, EventType } from '../../Event/Event';
 import { Game } from '../../Game/Game';
 import { Card } from '../Card';
 import { CardBehavior } from '../CardBehavior';
@@ -23,7 +23,16 @@ export abstract class WithdrawBehaviorBase implements CardBehavior {
 
         return {
             game: newGame,
-            events: [createWithdrawEvent(nextPlayer.id, drawCounts)],
+            events: [
+                {
+                    type: EventType.Withdraw,
+                    payload: {
+                        count: drawCounts,
+                        playerId: nextPlayer.id,
+                        playerName: nextPlayer.name,
+                    },
+                },
+            ],
         };
     }
 
