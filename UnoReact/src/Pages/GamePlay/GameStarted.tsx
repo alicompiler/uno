@@ -18,10 +18,18 @@ export const GameStarted: React.FC = () => {
     const gameState = gamePlay.gameState!;
     const playCard = usePlayCard();
 
+    const isActivePlayerMe = gameState.activePlayer.id === myId;
+
     useEffect(() => {
         const profile = getProfile();
         setMyId(profile?.id ?? '');
     }, []);
+
+    useEffect(() => {
+        if (!isActivePlayerMe) {
+            setIsColorModalOpen(false);
+        }
+    }, [isActivePlayerMe]);
 
     return (
         <>

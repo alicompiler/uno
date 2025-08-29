@@ -3,10 +3,12 @@ import { Game, GameDirection } from '../../../Domain/Game/Game';
 import { Player } from '../../../Domain/Player/Player';
 import { buildOutgoingMessage, OutgoingMessageType } from './OutgoingMessage';
 
+type CardCountIndicator = 'low' | 'few' | 'high';
+
 export interface GameState {
     id: string;
 
-    players: Player[];
+    players: (Player & { cardsCountIndicator: CardCountIndicator })[];
     topCard?: Card;
     withdrawPileCount: number;
     direction: GameDirection;
@@ -20,13 +22,24 @@ export interface GameState {
     finished: boolean;
 }
 
+const getCardsCountIndicator = (p: Player): CardCountIndicator => {
+    if (p.cards.length <= 3) {
+        return 'low';
+    } else if (p.cards.length <= 5) {
+        return 'few';
+    } else {
+        return 'high';
+    }
+};
+
 function buildGameState(game: Game, playerId: string): GameState {
     const topCard = game.discardPile.length > 0 ? game.discardPile[game.discardPile.length - 1] : undefined;
     const activePlayer = game.players[game.activePlayerIndex];
     const me = game.players.find((g) => g.id === playerId);
+
     return {
         id: game.id,
-        players: game.players.map((p) => ({ ...p, cards: [] })),
+        players: game.players.map((p) => ({ ...p, cards: [], cardsCountIndicator: getCardsCountIndicator(p) })),
         topCard,
         withdrawPileCount: game.withdrawPile.length,
         direction: game.direction,

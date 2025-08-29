@@ -18,6 +18,7 @@ export const TablePlayer: React.FC<{ player: GameStatus['players'][number]; isAc
                 {player.name}
             </p>
             {player.isConnected === false ? <p className="text-xs">[Disconnected]</p> : null}
+            {player.isConnected && player.cardsCountIndicator === 'low' ? <p className="text-xs">(Low Cards)</p> : null}
         </div>
     );
 };

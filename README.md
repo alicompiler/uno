@@ -165,14 +165,8 @@ If you’re not sure where to start, feel free to check the issues
 
 ## Next
 
-- UI should work on screen size
-- cancel playing wild card when the color modal is opened
-- show players cards: low,mid,high
-- Add sound effects
-- Better events/messages when card is played (and active player changed)
 - Reset game action
 - Better error message
-- Show alert after clicking on the invite button
 - Game settings
 - Leave game (before starting the game)
 - Kick player (by admin)
