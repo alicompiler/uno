@@ -23,11 +23,6 @@ export const EventsContainer: React.FC<PropsWithChildren> = () => {
     const activePlayer = gamePlay.gameState?.activePlayer;
     const hasGameStarted = gamePlay.gameState?.hasStarted;
 
-    console.log({
-        gamePlay,
-        events,
-    });
-
     const me = gamePlay.currentPlayer;
 
     useEffect(() => {

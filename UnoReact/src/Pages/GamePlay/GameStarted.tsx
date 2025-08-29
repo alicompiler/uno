@@ -30,7 +30,7 @@ export const GameStarted: React.FC = () => {
                     <GameInfoBar />
                 </div>
             )}
-            <div className="flex-1 w-full flex items-center justify-center">
+            <div className="flex-1 w-full flex items-center justify-center py-10 px-4">
                 <Table gameState={gameState} meId={myId} />
             </div>
             <div className="w-full flex items-center justify-center">

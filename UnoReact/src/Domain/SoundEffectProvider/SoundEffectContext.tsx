@@ -6,6 +6,6 @@ interface SoundEffectContextType {
 }
 
 export const SoundEffectContext = React.createContext<SoundEffectContextType>({
-    play: () => console.log('cannot find sound effect provider'),
-    loadAll: () => console.log('cannot find sound effect provider'),
+    play: () => console.error('cannot find sound effect provider'),
+    loadAll: () => console.error('cannot find sound effect provider'),
 });

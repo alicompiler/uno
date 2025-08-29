@@ -27,7 +27,7 @@ export const GameInfoBar: React.FC = () => {
     const activePlayer = gameState.activePlayer;
 
     return (
-        <div className="w-full flex justify-between items-center p-4">
+        <div className="w-full flex justify-between items-center">
             <div className="w-12 h-12 border-4 border-cyan-500 rounded-full flex items-center justify-center">
                 <p className="text-lg text-white">{time}</p>
             </div>
@@ -42,7 +42,6 @@ export const GameInfoBar: React.FC = () => {
             </div>
 
             <div className="flex items-center justify-center flex-col gap-2">
-                <p>Connection</p>
                 <StatusDot status={ws.connectionStatus} />
             </div>
         </div>

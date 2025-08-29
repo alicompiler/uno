@@ -47,9 +47,9 @@ export const Table: React.FC<TableProps> = ({ meId, gameState }) => {
     }
 
     return (
-        <div className="relative">
+        <div className="relative h-full w-full flex items-center justify-center">
             <div
-                className={`bg-gray-700 w-50 h-96 md:w-72 md:h-100 lg:w-80 lg:h-140 rounded-full shadow-lg shadow-gray-500 flex flex-col gap-2 justify-between items-center text-white font-bold`}
+                className={`bg-gray-700 h-full w-4/5 md:w-88 rounded-full shadow-lg shadow-gray-500 flex flex-col gap-2 justify-between items-center text-white font-bold`}
             >
                 <div className="p-8 flex flex-col items-center justify-center gap-2">
                     <p className="text-lg">Play Direction</p>

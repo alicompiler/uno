@@ -20,6 +20,4 @@ const wss = new WebSocketServer({
 
 wss.on('connection', (ws, req) => createWebSocketConnectionHandler(ws, req));
 
-restApi.listen(3000, () => {
-    console.log('RestApi available on port 3000');
-});
+restApi.listen(3000);
