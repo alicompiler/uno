@@ -82,6 +82,7 @@ describe('Game', () => {
                             payload: {
                                 count: 1,
                                 playerId: 'test',
+                                playerName: 'test',
                             },
                         },
                     ],

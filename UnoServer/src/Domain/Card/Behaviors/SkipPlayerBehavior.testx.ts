@@ -7,7 +7,7 @@ import { SkipPlayerBehavior } from './SkipPlayerBehavior';
 describe('SkipPlayerBehavior', () => {
     it('should skip player', () => {
         const game = buildMockGame();
-        game.players = [...game.players, { id: 'p3', cards: [], isAdmin: false, name: 'Player 3' }];
+        game.players = [...game.players, { id: 'p3', cards: [], isAdmin: false, name: 'Player 3', isConnected: true }];
         game.activePlayerIndex = 0;
 
         const behavior = new SkipPlayerBehavior();
@@ -16,8 +16,7 @@ describe('SkipPlayerBehavior', () => {
 
         expect(newGame.activePlayerIndex).toEqual(2);
         expect(events.length).toEqual(1);
-        expect(events[0].type).toEqual(EventType.SkipPlayer);
-        expect(events[0].payload).toEqual({ nextPlayerId: 'p3' });
+        expect(events[0].type).toEqual(EventType.SkipNoCard);
 
         assertNotChanged(game, newGame, ['activePlayerIndex']);
     });

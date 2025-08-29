@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "build": "npx tsc",
     "test": "vitest",
     "test:cov": "vitest --coverage",
     "start": "npx ts-node server.ts",

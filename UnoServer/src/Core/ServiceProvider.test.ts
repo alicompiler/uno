@@ -1,6 +1,5 @@
-import { InMemoryGameRepository } from '../Domain/Game/Repository/InMemoryGameRepository.js';
-import { InMemoryServiceProvider } from './InMemoryServiceProvider.ts';
-import { getServiceProvider } from './ServiceProvider.ts';
+import { InMemoryServiceProvider } from './InMemoryServiceProvider';
+import { getServiceProvider } from './ServiceProvider';
 
 describe('ServiceProvider', () => {
     describe('creating service provider', () => {

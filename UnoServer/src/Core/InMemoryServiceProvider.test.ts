@@ -1,5 +1,5 @@
-import { InMemoryGameRepository } from '../Domain/Game/Repository/InMemoryGameRepository.js';
-import { InMemoryServiceProvider } from './InMemoryServiceProvider.ts';
+import { InMemoryGameRepository } from '../Domain/Game/Repository/InMemoryGameRepository';
+import { InMemoryServiceProvider } from './InMemoryServiceProvider';
 
 describe('InMemoryServiceProvider', () => {
     describe('creating services', () => {
