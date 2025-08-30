@@ -15,9 +15,9 @@ restApi.get('/health', (_, res) => res.status(200).send('OK'));
 addGamesApi(restApi);
 
 const wss = new WebSocketServer({
-    port: 3001,
+    port: 4001,
 });
 
 wss.on('connection', (ws, req) => createWebSocketConnectionHandler(ws, req));
 
-restApi.listen(3000);
+restApi.listen(4000);
