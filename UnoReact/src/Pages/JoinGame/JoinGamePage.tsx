@@ -45,7 +45,7 @@ export const JoinGamePage: React.FC = () => {
     };
 
     return (
-        <div className="h-full flex items-center justify-center flex-col">
+        <div className="h-screen flex items-center justify-center flex-col">
             <h1 className="text-2xl font-bold text-center mb-6">Join Game</h1>
             <form className="flex flex-col space-y-4">
                 <TextInput

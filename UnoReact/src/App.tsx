@@ -27,10 +27,8 @@ function App() {
     return (
         <MessageProvider duration={3000}>
             <SoundEffectProvider sounds={sounds}>
-                <div className="h-screen max-h-screen w-full max-w-full text-white">
-                    <Background>
-                        <Router />
-                    </Background>
+                <div className="min-h-screen w-full max-w-full text-white">
+                    <Router />
                 </div>
             </SoundEffectProvider>
         </MessageProvider>

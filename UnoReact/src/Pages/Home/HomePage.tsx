@@ -4,7 +4,7 @@ import { Button } from '../../Components/Button/Button';
 
 export const HomePage: React.FC = () => {
     return (
-        <div className="flex items-center justify-center h-full flex-col gap-6 w-full">
+        <div className="flex items-center justify-center h-screen flex-col gap-6 w-full">
             <div className="flex items-center justify-center h-full flex-col gap-6 md:gap-12 flex-1">
                 <h1 className="text-xl">Welcome</h1>
 

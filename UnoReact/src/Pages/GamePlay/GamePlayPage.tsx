@@ -8,9 +8,11 @@ export type ConnectionStatus = 'disconnected' | 'connecting' | 'connected';
 export const GamePlayPage: React.FC = () => {
     const { gameId } = useParams() as { gameId: string };
     return (
-        <GamePlayProvider gameId={gameId}>
-            <EventsContainer />
-            <GamePlayContainer />
-        </GamePlayProvider>
+        <div className="min-h-screen flex items-center justify-center flex-col">
+            <GamePlayProvider gameId={gameId}>
+                <EventsContainer />
+                <GamePlayContainer />
+            </GamePlayProvider>
+        </div>
     );
 };
