@@ -51,11 +51,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Nodejs
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22
-
       - name: SSH Deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
