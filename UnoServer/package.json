@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npx tsc",
     "test": "vitest",
-    "test:ci": "node --loader ts-node/esm node_modules/.bin/vitest --run",
+    "test:ci": "vitest --run --reporter default",
     "test:cov": "vitest --coverage",
     "start": "npx ts-node server.ts",
     "lint": "eslint .",
