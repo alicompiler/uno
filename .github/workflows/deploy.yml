@@ -51,6 +51,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Check Node Version
+        run: node -v
+
       - name: SSH Deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
