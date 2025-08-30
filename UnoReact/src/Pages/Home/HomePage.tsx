@@ -17,13 +17,13 @@ export const HomePage: React.FC = () => {
                 </div>
 
                 <div className="flex gap-2 flex-col items-center">
-                    <Link to="/create-game">
-                        <Button width="50" size="lg">
+                    <Link to="/create-game" className="w-full">
+                        <Button width="full" size="lg">
                             Create Game
                         </Button>
                     </Link>
-                    <Link to="/join-game">
-                        <Button width="50" size="lg">
+                    <Link to="/join-game" className="w-full">
+                        <Button width="full" size="lg">
                             Join Game
                         </Button>
                     </Link>

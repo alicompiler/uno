@@ -14,34 +14,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # - name: Setup Nodejs
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 22
+      - name: Setup Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
 
-      # - name: Server Install
-      #   working-directory: UnoServer
-      #   run: npm install
+      - name: Server Install
+        working-directory: UnoServer
+        run: npm install
 
-      # - name: Server Test
-      #   working-directory: UnoServer
-      #   run: npm run test:ci
+      - name: Server Lint
+        working-directory: UnoServer
+        run: npm run lint
 
-      # - name: Server Lint
-      #   working-directory: UnoServer
-      #   run: npm run lint
+      - name: Server Test
+        working-directory: UnoServer
+        run: npm run test:ci
 
-      # - name: React Install
-      #   working-directory: UnoReact
-      #   run: npm install
+      - name: React Install
+        working-directory: UnoReact
+        run: npm install
 
-      # - name: React Lint
-      #   working-directory: UnoReact
-      #   run: npm run lint
+      - name: React Lint
+        working-directory: UnoReact
+        run: npm run lint
 
-      # - name: React Test
-      #   working-directory: UnoReact
-      #   run: npm run test:ci
+      - name: React Test
+        working-directory: UnoReact
+        run: npm run test:ci
 
   deploy:
     runs-on: ubuntu-latest
