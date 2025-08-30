@@ -27,6 +27,10 @@ players can create a game and invites others, or can join a game.
 
 ## Start The Game
 
+you can play the game online on: <https://stacktrace.uno/>
+
+or locally,
+
 in the root directory run the following command:
 
 ```bash
@@ -195,7 +199,6 @@ If you’re not sure where to start, feel free to check the issues
 - Set player as an admin (by admin)
 - More Tests
 - UI Improvements + Better Animations
-- CI/CD Configuration
 - Uno Design Studio
   - Design your own uno version
 
