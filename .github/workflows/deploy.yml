@@ -1,0 +1,100 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: React Install
+        working-directory: UnoReact
+        run: npm install
+
+      - name: React Lint
+        working-directory: UnoReact
+        run: npm run lint
+
+      - name: React Test
+        working-directory: UnoReact
+        run: npm test -- --ci --watchAll=false
+
+      - name: Server Install
+        working-directory: UnoServer
+        run: npm install
+
+      - name: Server Lint
+        working-directory: UnoServer
+        run: npm run lint
+
+      - name: Server Test
+        working-directory: UnoServer
+        run: npm test -- --ci --watchAll=false
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      - name: React Build
+        working-directory: UnoReact
+        run: |
+          npm install
+          npm run build
+
+      - name: Server Build
+        working-directory: UnoServer
+        run: |
+          npm install
+          npm run build
+
+      - name: SSH Deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /home/uno || exit 1
+
+            if [ ! -d ".git" ]; then
+              git clone https://github.com/alicompiler/uno.git .
+            fi
+            git reset --hard
+            git pull origin main
+
+            # Build React
+            cd UnoReact
+            npm install
+            npm run build
+            cp -r dist/* /var/www/stacktrace/
+
+            # Build Server
+            cd ../UnoServer
+            npm install
+            npm run build
+
+            # Serve With PM2
+            pm2 restart stacktrace-server || pm2 start dist/server.js --name stacktrace-server
+            pm2 save
