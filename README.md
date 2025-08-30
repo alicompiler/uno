@@ -4,6 +4,27 @@ online game with multiple players, it has different versions of the [UnoGame](ht
 
 players can create a game and invites others, or can join a game.
 
+## Table of Contents
+
+- [Uno Game](#uno-game)
+  - [Table of Contents](#table-of-contents)
+  - [Start The Game](#start-the-game)
+  - [Features](#features)
+  - [Tech Stack](#tech-stack)
+  - [Tech Details](#tech-details)
+    - [Communication](#communication)
+    - [Authentication \& Authorization](#authentication--authorization)
+    - [Where The Data Live](#where-the-data-live)
+    - [Extensible Code](#extensible-code)
+    - [UI Events](#ui-events)
+  - [Game Lifecycle](#game-lifecycle)
+  - [Game Algorithm](#game-algorithm)
+    - [Start Game](#start-game)
+    - [Behaviors Algorithm](#behaviors-algorithm)
+  - [Contribution](#contribution)
+  - [Next](#next)
+  - [License](#license)
+
 ## Start The Game
 
 in the root directory run the following command:
