@@ -139,7 +139,7 @@ describe('Game', () => {
             expect(game.direction).toEqual('ltr');
 
             expect(events[0].type).toEqual(EventType.Withdraw);
-            expect(events[0].payload).toEqual({ count: 1, playerId: 'test' });
+            expect(events[0].payload).toEqual({ count: 1, playerId: 'test', playerName: 'test' });
 
             expect(events[1].type).toEqual(EventType.WithdrawPileReset);
             expect(events[1].payload).toEqual(undefined);
@@ -192,7 +192,7 @@ describe('Game', () => {
             const { game: newGame, events } = playCard(game, card, {});
 
             expect(newGame.finished).toEqual(true);
-            expect(events.length).toEqual(1);
+            expect(events.length).toEqual(2);
             expect(events[0].type).toEqual(EventType.GameFinished);
             expect(events[0].payload).toEqual({
                 winner: {
@@ -224,7 +224,7 @@ describe('Game', () => {
 
             expect(newGame.withdrawPile.length).toEqual(10);
             newGame.withdrawPile.forEach((c) => expect(c.id.startsWith('discard-id-')).toEqual(true));
-            expect(events.length).toEqual(1);
+            expect(events.length).toEqual(2);
             expect(events[0].type).toEqual(EventType.WithdrawPileReset);
         });
     });
@@ -251,6 +251,8 @@ describe('Game', () => {
             expect(events[0].payload).toEqual({
                 playerId: 'p1',
                 count: 1,
+                playerName: 'Player 1',
+                cardValue: 'plus1',
             });
         });
 
@@ -284,7 +286,7 @@ describe('Game', () => {
             game.activePlayerIndex = 0;
             const { game: newGame, events } = skipNoCard(game);
             expect(newGame.drawCount).toEqual(0);
-            expect(events.length).toEqual(0);
+            expect(events.length).toEqual(1);
             expect(newGame.activePlayerIndex).toEqual(1);
         });
     });
@@ -383,15 +385,15 @@ describe('Game', () => {
             game.color = '' as unknown as CardColor;
             game.withdrawPile = new Array(100).fill(0).map((_, i) => ({ id: `id-${i}`, behaviors: [], isWild: true }));
 
-            startGame(game);
+            const { game: newGame } = startGame(game);
 
-            expect(game.hasStarted).toEqual(true);
-            expect(game.discardPile.length).toEqual(1);
-            expect(game.players[0].cards.length).toEqual(7);
-            expect(game.players[1].cards.length).toEqual(7);
-            expect(game.activePlayerIndex).toBeGreaterThan(-1);
-            expect(cardColors.includes(game.color)).toEqual(true);
-            expect(game.withdrawPile.length).toEqual(100 - 14 - 1); // total - given to players - top card
+            expect(newGame.hasStarted).toEqual(true);
+            expect(newGame.discardPile.length).toEqual(1);
+            expect(newGame.players[0].cards.length).toEqual(7);
+            expect(newGame.players[1].cards.length).toEqual(7);
+            expect(newGame.activePlayerIndex).toBeGreaterThan(-1);
+            expect(cardColors.includes(newGame.color)).toEqual(true);
+            expect(newGame.withdrawPile.length).toEqual(100 - 14 - 1); // total - given to players - top card
         });
 
         it('should start game and set color based on the top card', () => {
@@ -404,15 +406,15 @@ describe('Game', () => {
                 .fill(0)
                 .map((_, i) => ({ id: `id-${i}`, behaviors: [], isWild: false, color: 'blue', value: '1' }));
 
-            startGame(game);
+            const { game: newGame } = startGame(game);
 
-            expect(game.hasStarted).toEqual(true);
-            expect(game.discardPile.length).toEqual(1);
-            expect(game.players[0].cards.length).toEqual(7);
-            expect(game.players[1].cards.length).toEqual(7);
-            expect(game.activePlayerIndex).toBeGreaterThan(-1);
-            expect(game.color).toEqual('blue');
-            expect(game.withdrawPile.length).toEqual(100 - 14 - 1); // total - given to players - top card
+            expect(newGame.hasStarted).toEqual(true);
+            expect(newGame.discardPile.length).toEqual(1);
+            expect(newGame.players[0].cards.length).toEqual(7);
+            expect(newGame.players[1].cards.length).toEqual(7);
+            expect(newGame.activePlayerIndex).toBeGreaterThan(-1);
+            expect(newGame.color).toEqual('blue');
+            expect(newGame.withdrawPile.length).toEqual(100 - 14 - 1); // total - given to players - top card
         });
     });
 

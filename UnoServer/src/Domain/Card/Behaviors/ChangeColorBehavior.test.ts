@@ -10,7 +10,7 @@ describe('ChangeColorBehavior', () => {
 
         expect(newGame.color).toEqual('red');
 
-        expect(events.length).toEqual(0);
+        expect(events.length).toEqual(1);
 
         assertNotChanged(game, newGame, ['color']);
     });
