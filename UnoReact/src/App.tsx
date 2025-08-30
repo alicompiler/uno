@@ -1,4 +1,3 @@
-import { Background } from './Components/Background/Background';
 import { MessageProvider } from './Components/MessageProvider/MessageProvider';
 import { SoundEffectProvider } from './Domain/SoundEffectProvider/SoundEffectProvider';
 import { Router } from './Root/Router';
