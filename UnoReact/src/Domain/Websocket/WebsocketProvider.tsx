@@ -8,13 +8,15 @@ interface Props extends PropsWithChildren {
     onMessage: (message: IncomingMessage, ws: WebSocket | null) => void;
 }
 
+const baseUrl = import.meta.env.VITE_WS_BASE;
+
 export const WebsocketProvider: React.FC<Props> = ({ gameId, onMessage, children }) => {
     const ws = useRef<WebSocket | null>(null);
     const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('disconnected');
 
     useEffect(() => {
         const profile = getProfileOrCreateIfNotExists();
-        ws.current = new WebSocket(`ws://${window.location.hostname}:3001?gameId=${gameId}&playerId=${profile.id}`);
+        ws.current = new WebSocket(`${baseUrl}?gameId=${gameId}&playerId=${profile.id}`);
         setConnectionStatus('connecting');
         ws.current.onopen = () => {
             setConnectionStatus('connected');

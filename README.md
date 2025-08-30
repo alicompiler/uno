@@ -167,6 +167,7 @@ If you’re not sure where to start, feel free to check the issues
 
 - Reset game action
 - Better error message
+- Card filtering options (sort by value,color)
 - Game settings
 - Leave game (before starting the game)
 - Kick player (by admin)
@@ -176,3 +177,7 @@ If you’re not sure where to start, feel free to check the issues
 - CI/CD Configuration
 - Uno Design Studio
   - Design your own uno version
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).

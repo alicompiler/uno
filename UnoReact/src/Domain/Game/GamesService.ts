@@ -1,4 +1,4 @@
-const baseUrl = `http://${window.location.hostname}:3000`;
+const baseUrl = import.meta.env.VITE_API_BASE;
 import Axios from 'axios';
 import type { GameStatus } from '../Message/Incoming/GameStatusMessagePayload';
 
