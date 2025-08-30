@@ -66,8 +66,9 @@ jobs:
             cd /home/uno || exit 1
 
             if [ ! -d ".git" ]; then
-              git clone https://github.com/alicompiler/uno.git .
+              git clone https://github.com/alicompiler/uno.git uno
             fi
+            cd uno
             git reset --hard
             git pull origin main
 
