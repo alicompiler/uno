@@ -5,7 +5,7 @@ const { globalIgnores } = require('eslint/config')
 const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended')
 
 module.exports = tseslint.config([
-  globalIgnores(['dist', 'coverage']),
+  globalIgnores(['dist', 'coverage', 'vitest.config.ts']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
