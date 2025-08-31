@@ -1,4 +1,3 @@
-import * as uuid from 'uuid';
 import { Game } from '../Game';
 import { GameSettings } from '../GameSetting';
 import { Card, CardValue } from '../../Card/Card';
@@ -31,7 +30,7 @@ export const createOriginalGame = (): Game => {
     ];
 
     return {
-        id: uuid.v4(),
+        id: '',
         activePlayerIndex: 0,
         players: [],
         color: 'blue',

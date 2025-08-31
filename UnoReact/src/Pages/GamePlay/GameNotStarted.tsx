@@ -32,6 +32,12 @@ export const GameNotStarted: React.FC = () => {
                 </ul>
             </div>
 
+            <div className="flex items-center justify-center flex-col py-6">
+                <p className="text-xl">
+                    Game Id: <span className="border-1 border-amber-400 p-2">{gamePlay.gameId}</span>
+                </p>
+            </div>
+
             <Button
                 disabled={players.length < 2 || gamePlay?.currentPlayer.isAdmin === false}
                 size="lg"

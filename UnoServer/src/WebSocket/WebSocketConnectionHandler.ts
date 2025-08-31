@@ -5,6 +5,7 @@ import { getServiceProvider } from '../Core/ServiceProvider';
 import { GameStateEvent } from './Events/GameStateEvent';
 import { handleWebSocketMessage } from './WebSocketMessageHandler';
 import { Game, updatePlayerConnectionStatus } from '../Domain/Game/Game';
+import { cancelGameRemoval, scheduleGameRemoval } from '../Jobs/GameCleanup';
 
 const serviceProvider = getServiceProvider();
 const gamesRepository = serviceProvider.getGameRepository();
@@ -27,6 +28,7 @@ export const createWebSocketConnectionHandler = (ws: WebSocket, req: IncomingMes
 
     registerConnection(gameId, playerId, ws);
     updatePlayerConnectionStatus(game, playerId, true);
+    cancelGameRemoval(gameId);
 
     console.log(`Player connected: Game Id: ${gameId} , Player Id: ${playerId}`);
 
@@ -40,9 +42,7 @@ export const createWebSocketConnectionHandler = (ws: WebSocket, req: IncomingMes
         const gameStatusEvent = new GameStateEvent();
         gameStatusEvent.send(game);
 
-        if (game.players.every((p) => p.isConnected === false)) {
-            gamesRepository.removeById(game.id);
-        }
+        scheduleGameRemoval(gameId);
     });
 
     const gameStatusEvent = new GameStateEvent();
