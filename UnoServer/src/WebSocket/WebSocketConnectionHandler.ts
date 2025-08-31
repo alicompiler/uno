@@ -37,12 +37,7 @@ export const createWebSocketConnectionHandler = (ws: WebSocket, req: IncomingMes
     });
 
     ws.on('close', () => {
-        unregisterConnection(gameId, playerId);
-        updatePlayerConnectionStatus(game, playerId, false);
-        const gameStatusEvent = new GameStateEvent();
-        gameStatusEvent.send(game);
-
-        scheduleGameRemoval(gameId);
+        handlePlayerDisconnected(gameId, playerId);
     });
 
     const gameStatusEvent = new GameStateEvent();
@@ -52,4 +47,18 @@ export const createWebSocketConnectionHandler = (ws: WebSocket, req: IncomingMes
 const canPlayerJoin = (game: Game, playerId: string) => {
     const isPlayerAlreadyExist = game.players.some((p) => p.id === playerId);
     return game.finished === false && (game.hasStarted === false || (game.hasStarted && isPlayerAlreadyExist));
+};
+
+export const handlePlayerDisconnected = (gameId: string, playerId: string) => {
+    unregisterConnection(gameId, playerId);
+    const game = gamesRepository.findById(gameId);
+    if (game) {
+        updatePlayerConnectionStatus(game, playerId, false);
+        const gameStatusEvent = new GameStateEvent();
+        gameStatusEvent.send(game);
+    }
+
+    if (game && game.players.every((p) => p.isConnected === false)) {
+        scheduleGameRemoval(gameId);
+    }
 };
