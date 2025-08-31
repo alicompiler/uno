@@ -68,7 +68,7 @@ interface JoinGamePayload {
 }
 const joinGameSchema = Joi.object<JoinGamePayload>({
     userId: Joi.string().uuid().required(),
-    gameId: Joi.string().uuid().required(),
+    gameId: Joi.string().required(),
     name: Joi.string().min(1).required(),
 });
 
