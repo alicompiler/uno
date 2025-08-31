@@ -1,5 +1,6 @@
 import { DuplicateGameErrorCode } from '../../Errors/ErrorCodes';
 import { Game } from '../Game';
+import { generateGameKey } from '../KeyGenerator';
 import { GameRepository } from './GameRepository';
 
 export class InMemoryGameRepository implements GameRepository {
@@ -13,8 +14,22 @@ export class InMemoryGameRepository implements GameRepository {
         if (this.games.find((g) => g.id === game.id)) {
             throw new Error(`${DuplicateGameErrorCode}-Cannot add game, the id: ${game.id} is already used`);
         }
+        game.id = this.generateId();
         this.games.push(game);
         return game;
+    }
+
+    private generateId(): string {
+        let attempt = 1;
+        while (attempt <= 10) {
+            const key = generateGameKey();
+            const isKeyUsed = this.games.some((g) => g.id === key);
+            if (!isKeyUsed) {
+                return key;
+            }
+            attempt++;
+        }
+        throw new Error('Cannot generate key');
     }
 
     removeById(id: string): void {

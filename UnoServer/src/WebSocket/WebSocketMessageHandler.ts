@@ -41,7 +41,7 @@ export const handleWebSocketMessage = (data: string, gameId: string, playerId: s
 };
 
 // TODO: set from game settings
-const PLAYER_TIMEOUT_IN_MS = 30 * 1000;
+const PLAYER_TIMEOUT_IN_MS = 45 * 1000;
 // TODD: set from game settings
 const MAX_DRAW_COUNT = 1;
 
